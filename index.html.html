@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>越南語閱讀室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@400;600;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#E8EFE7; --surface:#F7FAF6; --ink:#1E2B26; --muted:#5C6B64;
+  --line:#C9D6CC; --jade:#2F6B5A; --vermilion:#B5402C; --tint:#D5E3D8;
+  --serif:"Noto Serif TC",Georgia,serif; --sans:"Be Vietnam Pro","Noto Sans TC",system-ui,sans-serif;
+  color-scheme:light;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#15201C; --surface:#1D2B26; --ink:#E4EEE8; --muted:#9FB3A9;
+    --line:#33463F; --jade:#7FC2A9; --vermilion:#E0785F; --tint:#25362F; color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#15201C; --surface:#1D2B26; --ink:#E4EEE8; --muted:#9FB3A9;
+  --line:#33463F; --jade:#7FC2A9; --vermilion:#E0785F; --tint:#25362F; color-scheme:dark;
+}
+*{box-sizing:border-box}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--sans);line-height:1.7;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+.wrap{max-width:720px;margin:0 auto;padding:24px 20px 64px}
+header{padding-top:12px;border-bottom:1px solid var(--line);padding-bottom:16px}
+h1{font-family:var(--serif);font-weight:700;font-size:1.6rem;margin:0;letter-spacing:.02em}
+.tagline{color:var(--muted);margin:4px 0 0;font-size:.95rem}
+nav{display:flex;gap:6px;margin-top:18px;flex-wrap:wrap}
+nav button{font:inherit;font-size:.95rem;background:none;border:1px solid var(--line);color:var(--muted);
+  padding:7px 16px;border-radius:999px;cursor:pointer}
+nav button[aria-selected="true"]{background:var(--ink);color:var(--surface);border-color:var(--ink)}
+nav button:focus-visible,button:focus-visible,input:focus-visible,label:focus-within{outline:2px solid var(--jade);outline-offset:2px}
+section.view{display:none;padding-top:28px}
+section.view.active{display:block}
+.meta{font-size:.88rem;color:var(--muted);display:flex;gap:14px;flex-wrap:wrap}
+.day-title{font-family:var(--serif);font-size:1.9rem;font-weight:600;margin:10px 0 2px;line-height:1.3}
+.day-sub{color:var(--muted);margin:0 0 8px;font-size:1rem}
+h3{font-family:var(--serif);font-size:1.15rem;font-weight:600;margin:40px 0 12px;padding-bottom:8px;border-bottom:1px solid var(--line)}
+.passage p{font-size:1.06rem;margin:0 0 1.1em;max-width:68ch}
+.passage p[lang="vi"]{color:var(--ink)}
+.zh{color:var(--muted);font-size:.98rem;border-left:3px solid var(--jade);padding:4px 0 4px 14px;margin:0}
+.zh p{margin:0 0 .8em;max-width:68ch}
+table{width:100%;border-collapse:collapse;font-size:.97rem}
+th,td{text-align:left;padding:9px 6px;border-bottom:1px solid var(--line);vertical-align:top}
+th{font-weight:500;color:var(--muted);font-size:.85rem}
+td.vi{font-weight:600;color:var(--jade);white-space:nowrap}
+.pattern{background:var(--surface);border:1px solid var(--line);border-radius:10px;padding:14px 16px;margin-bottom:10px}
+.pattern b{font-family:var(--serif);font-size:1.02rem}
+.pattern .ex{margin:6px 0 0;color:var(--muted);font-size:.95rem}
+.quiz-item{margin-bottom:22px}
+.quiz-item p{margin:0 0 8px;font-weight:500}
+.opt{display:flex;gap:10px;align-items:flex-start;padding:9px 12px;border:1px solid var(--line);border-radius:8px;margin-bottom:6px;cursor:pointer;background:var(--surface)}
+.opt input{margin-top:5px}
+.opt.right{border-color:var(--jade);background:var(--tint)}
+.opt.wrong{border-color:var(--vermilion)}
+.why{font-size:.92rem;color:var(--muted);margin:6px 0 0}
+.score{font-family:var(--serif);font-size:1.1rem;margin:8px 0 0}
+.btn{font:inherit;font-size:.95rem;background:var(--ink);color:var(--surface);border:0;padding:10px 20px;border-radius:999px;cursor:pointer;margin-top:6px}
+.search{width:100%;font:inherit;font-size:1rem;padding:11px 14px;border:1px solid var(--line);border-radius:10px;background:var(--surface);color:var(--ink)}
+.filters{display:flex;gap:6px;flex-wrap:wrap;margin:14px 0 6px}
+.chip{font:inherit;font-size:.85rem;border:1px solid var(--line);background:none;color:var(--muted);padding:4px 12px;border-radius:999px;cursor:pointer}
+.chip[aria-pressed="true"]{background:var(--jade);border-color:var(--jade);color:var(--surface)}
+.count{font-size:.85rem;color:var(--muted);margin:10px 0}
+.card{border-top:1px solid var(--line);padding:12px 0}
+.card .vi{font-family:var(--serif);font-size:1.15rem;font-weight:600;color:var(--jade)}
+.card .zhm{margin-left:8px}
+.card .note{color:var(--muted);font-size:.92rem;margin:2px 0 0}
+.card .ex{font-size:.95rem;margin:4px 0 0}
+.empty{color:var(--muted);padding:20px 0}
+footer{margin-top:48px;font-size:.85rem;color:var(--muted);border-top:1px solid var(--line);padding-top:14px}
+@media (prefers-reduced-motion: no-preference){section.view.active{animation:fade .35s ease both}}
+@keyframes fade{from{opacity:0;transform:translateY(4px)}to{opacity:1;transform:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>越南語閱讀室</h1>
+    <p class="tagline">給繁體中文母語者的 B1 閱讀練習</p>
+    <nav role="tablist" aria-label="主要選單">
+      <button role="tab" aria-selected="true" data-tab="read">今日閱讀</button>
+      <button role="tab" aria-selected="false" data-tab="vocab">單字庫</button>
+      <button role="tab" aria-selected="false" data-tab="pattern">句型</button>
+    </nav>
+  </header>
+
+  <section id="read" class="view active" role="tabpanel"></section>
+
+  <section id="vocab" class="view" role="tabpanel">
+    <input class="search" id="q" type="search" placeholder="搜尋越南文或中文意思" aria-label="搜尋單字">
+    <div class="filters" id="filters"></div>
+    <div class="count" id="count"></div>
+    <div id="vocabList"></div>
+  </section>
+
+  <section id="pattern" class="view" role="tabpanel"></section>
+
+  <footer>
+    要新增一天的內容，只需在下方 DAYS 陣列中加入一筆資料，頁面會自動更新。
+  </footer>
+</div>
+
+<script>
+/* ---------- 內容資料：每一天的格式與你的閱讀計畫一致 ---------- */
+const DAYS = [
+  {
+    date: "2026-10-19",
+    topic: "交通",
+    title: "Giao thông ở đồng bằng",
+    subtitle: "Đồng bằng sông Cửu Long 的交通變化",
+    level: "B1",
+    passage: [
+      "Đồng bằng sông Cửu Long là vùng sông nước nổi tiếng ở miền Nam Việt Nam. Ở đây, nhiều người vẫn đi lại bằng xuồng hoặc ghe trên các con kênh nhỏ. Tuy nhiên, trong những năm gần đây, hệ thống đường bộ được mở rộng rất nhanh. Các cây cầu mới nối liền những thành phố và xã trước đây rất khó đến. Nhờ vậy, học sinh có thể đến trường nhanh hơn, và nông dân mang nông sản ra chợ dễ dàng hơn.",
+      "Tuy vậy, sự phát triển này cũng gây ra một số vấn đề. Lượng xe máy và xe tải tăng lên, nên tình trạng kẹt xe vào giờ cao điểm trở nên phổ biến hơn. Nhiều chuyên gia cho rằng các thành phố cần quy hoạch bãi đỗ xe tốt hơn và phát triển xe buýt công cộng. Ngoài ra, việc xây dựng đường cao tốc cũng đòi hỏi phải bảo vệ đất nông nghiệp và môi trường.",
+      "Một người đi làm ở Cần Thơ kể rằng anh thường đi xe buýt vì tiết kiệm được tiền xăng và không phải lo tìm chỗ đỗ xe. Anh nói: “Ban đầu tôi cảm thấy hơi bất tiện, nhưng bây giờ tôi thấy thoải mái hơn nhiều.” Theo anh, nếu tuyến xe buýt đến đúng giờ và sạch sẽ hơn, nhiều người sẽ chọn cách di chuyển này.",
+      "Có lẽ trong tương lai, giao thông ở đồng bằng sẽ kết hợp cả đường thủy lẫn đường bộ. Điều quan trọng là phát triển thế nào để vẫn giữ được nét văn hóa sông nước đặc trưng của vùng đất này."
+    ],
+    zh: [
+      "湄公河三角洲是越南南部著名的水鄉地區。許多人仍然在小河道上搭乘小船或木船往來。不過，近年來陸路交通擴建得很快。新建的橋樑連接了過去很難到達的城鎮與鄉村。因此，學生上學更快，農民也更容易把農產品運到市場。",
+      "然而，這種發展也帶來一些問題。摩托車與貨車增加，尖峰時段塞車的情況變得更普遍。許多專家認為，城市應該更妥善規劃停車場，並發展大眾公車。此外，興建高速公路也必須保護農地與環境。",
+      "一位在芹苴工作的上班族說，他經常搭公車，因為可以省下油錢，也不必擔心找停車位。他說：「一開始我覺得有點不方便，但現在舒服多了。」他認為，如果公車準時且更乾淨，很多人會選擇這種交通方式。",
+      "也許未來，三角洲的交通會同時結合水路與陸路。重要的是，發展的方式要能保留這片土地獨特的水鄉文化。"
+    ],
+    vocab: [
+      { vi: "đồng bằng", zh: "平原、三角洲", note: "đồng bằng sông Cửu Long 指湄公河三角洲", ex: "Đồng bằng này rất màu mỡ. 這片平原非常肥沃。" },
+      { vi: "sông nước", zh: "水鄉、河川縱橫", note: "形容河道很多的地區或生活方式", ex: "Cuộc sống sông nước rất đặc trưng. 水上生活很有特色。" },
+      { vi: "xuồng", zh: "小船（多為機動或划槳）", note: "南部常見的小型船隻", ex: "Anh ấy đi xuồng ra chợ. 他搭小船去市場。" },
+      { vi: "ghe", zh: "木船、大型載貨船", note: "南部用語，比 xuồng 大", ex: "Ghe chở đầy trái cây. 木船載滿了水果。" },
+      { vi: "kênh", zh: "運河、水道", note: "", ex: "Con kênh này rất rộng. 這條運河很寬。" },
+      { vi: "nối liền", zh: "連接", note: "常用於道路、橋樑", ex: "Cây cầu nối liền hai bờ sông. 這座橋連接河的兩岸。" },
+      { vi: "nông sản", zh: "農產品", note: "", ex: "Nông sản được bán ở chợ. 農產品在市場販售。" },
+      { vi: "quy hoạch", zh: "規劃", note: "城市或土地的整體規劃", ex: "Thành phố đang quy hoạch lại giao thông. 城市正在重新規劃交通。" },
+      { vi: "kẹt xe", zh: "塞車", note: "口語常用", ex: "Sáng nay kẹt xe rất nặng. 今天早上塞車很嚴重。" },
+      { vi: "cao điểm", zh: "尖峰時段", note: "giờ cao điểm 尖峰時間", ex: "Giờ cao điểm đường rất đông. 尖峰時段路上很擠。" },
+      { vi: "phổ biến", zh: "普遍的", note: "trở nên phổ biến 變得普遍", ex: "Xe máy rất phổ biến. 摩托車非常普遍。" },
+      { vi: "chuyên gia", zh: "專家", note: "", ex: "Chuyên gia giao thông đưa ra ý kiến. 交通專家提出了意見。" },
+      { vi: "đường cao tốc", zh: "高速公路", note: "", ex: "Đường cao tốc mới đã mở. 新的高速公路已經通車。" },
+      { vi: "bất tiện", zh: "不方便", note: "", ex: "Việc này khá bất tiện. 這件事相當不方便。" },
+      { vi: "tiết kiệm", zh: "節省", note: "tiết kiệm tiền 省錢", ex: "Đi xe buýt tiết kiệm tiền. 搭公車可以省錢。" },
+      { vi: "đỗ xe", zh: "停車", note: "bãi đỗ xe 停車場", ex: "Bãi đỗ xe ở đâu? 停車場在哪裡？" },
+      { vi: "đúng giờ", zh: "準時", note: "", ex: "Tàu đến đúng giờ. 火車準時到站。" },
+      { vi: "đặc trưng", zh: "特色、獨特", note: "", ex: "Món ăn có hương vị đặc trưng. 這道菜有獨特的風味。" },
+      { vi: "kết hợp", zh: "結合", note: "", ex: "Kết hợp học và nghỉ ngơi. 結合學習與休息。" },
+      { vi: "đường thủy", zh: "水路", note: "đường bộ 陸路", ex: "Đường thủy vẫn rất quan trọng. 水路仍然非常重要。" }
+    ],
+    patterns: [
+      { pat: "Nhờ vậy, …", zh: "因此、多虧如此", ex: "Nhờ vậy, học sinh đến trường nhanh hơn. 因此，學生上學更快了。" },
+      { pat: "Tuy vậy, …", zh: "儘管如此、然而", ex: "Tuy vậy, sự phát triển cũng gây ra vấn đề. 然而，這樣的發展也帶來問題。" },
+      { pat: "Ngoài ra, …", zh: "此外", ex: "Ngoài ra, cần bảo vệ môi trường. 此外，還需要保護環境。" },
+      { pat: "Ban đầu … nhưng bây giờ …", zh: "起初……但現在……", ex: "Ban đầu tôi thấy bất tiện, nhưng bây giờ thì quen rồi. 起初我覺得不方便，但現在已經習慣了。" },
+      { pat: "Nếu … thì …", zh: "如果……就……", ex: "Nếu xe buýt đúng giờ, nhiều người sẽ đi. 如果公車準時，很多人就會搭。" },
+      { pat: "Không phải + động từ", zh: "不必……", ex: "Anh không phải lo tìm chỗ đỗ xe. 他不必擔心找停車位。" },
+      { pat: "Điều quan trọng là …", zh: "重要的是……", ex: "Điều quan trọng là giữ gìn văn hóa. 重要的是保存文化。" },
+      { pat: "Có lẽ …", zh: "也許、或許", ex: "Có lẽ trời sẽ mưa chiều nay. 也許今天下午會下雨。" }
+    ],
+    quiz: [
+      { q: "根據文章，當地居民過去主要用什麼方式在河道上移動？", opts: ["火車", "小船（xuồng 與 ghe）", "飛機"], ans: 1, why: "第一段提到人們在小河道上搭乘 xuồng 或 ghe。" },
+      { q: "文章說，新建的橋樑帶來什麼好處？", opts: ["學生上學更快，農產品更容易運出", "交通費用變得更貴", "河道不再有船隻"], ans: 0, why: "原文指出學生能更快到校，農民也更容易把農產品運到市場。" },
+      { q: "文章提到車輛增加造成什麼問題？", opts: ["空氣變得更乾淨", "尖峰時段塞車更常見", "停車場越來越多"], ans: 1, why: "摩托車與貨車增加，使 kẹt xe 在 giờ cao điểm 更普遍。" },
+      { q: "在芹苴工作的那位上班族為什麼常搭公車？", opts: ["公車比較漂亮", "省油錢，也不用找停車位", "公司規定必須搭公車"], ans: 1, why: "他說搭公車可以 tiết kiệm 油錢，也不必 lo tìm chỗ đỗ xe。" }
+    ]
+  }
+];
+
+/* ---------- 工具 ---------- */
+const $ = (s, r = document) => r.querySelector(s);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+
+/* ---------- 分頁 ---------- */
+document.querySelectorAll('nav [role="tab"]').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('nav [role="tab"]').forEach(b => b.setAttribute('aria-selected', b === btn ? 'true' : 'false'));
+    document.querySelectorAll('section.view').forEach(s => s.classList.toggle('active', s.id === btn.dataset.tab));
+  });
+});
+
+/* ---------- 今日閱讀（固定結構）---------- */
+function renderReading(day) {
+  const root = $('#read');
+  root.innerHTML = '';
+  root.append(el('div', 'meta', `${day.date}　·　${day.level}　·　主題：${day.topic}`));
+  root.append(el('h2', 'day-title', day.title));
+  root.append(el('p', 'day-sub', day.subtitle));
+
+  root.append(el('h3', null, '1　完整練習文'));
+  const passage = el('div', 'passage');
+  day.passage.forEach(t => { const p = el('p', null, t); p.lang = 'vi'; passage.append(p); });
+  root.append(passage);
+
+  root.append(el('h3', null, '2　中文翻譯'));
+  const zh = el('div', 'zh');
+  day.zh.forEach(t => zh.append(el('p', null, t)));
+  root.append(zh);
+
+  root.append(el('h3', null, '3　單字'));
+  const table = el('table');
+  const thead = el('thead'); const hr = el('tr');
+  ['越南文', '中文', '說明與例句'].forEach(h => hr.append(el('th', null, h)));
+  thead.append(hr); table.append(thead);
+  const tb = el('tbody');
+  day.vocab.forEach(v => {
+    const tr = el('tr');
+    tr.append(el('td', 'vi', v.vi), el('td', null, v.zh));
+    const td = el('td');
+    if (v.note) td.append(el('div', null, v.note));
+    td.append(el('div', null, v.ex));
+    tr.append(td); tb.append(tr);
+  });
+  table.append(tb); root.append(table);
+
+  root.append(el('h3', null, '4　句型'));
+  day.patterns.forEach(p => {
+    const box = el('div', 'pattern');
+    box.append(el('b', null, p.pat), el('span', null, '　' + p.zh));
+    box.append(el('p', 'ex', p.ex));
+    root.append(box);
+  });
+
+  root.append(el('h3', null, '5　閱讀題'));
+  const quizWrap = el('div');
+  const scoreEl = el('p', 'score');
+  const items = day.quiz.map((item, i) => {
+    const wrap = el('div', 'quiz-item');
+    wrap.append(el('p', null, `${i + 1}. ${item.q}`));
+    const name = `q${day.date}-${i}`;
+    const labels = item.opts.map((o, j) => {
+      const lab = el('label', 'opt');
+      const inp = document.createElement('input');
+      inp.type = 'radio'; inp.name = name; inp.value = j;
+      lab.append(inp, el('span', null, o));
+      wrap.append(lab);
+      return lab;
+    });
+    const why = el('p', 'why'); why.hidden = true; why.textContent = item.why;
+    wrap.append(why);
+    quizWrap.append(wrap);
+    return { item, labels, why, name };
+  });
+  const btn = el('button', 'btn', '檢查答案');
+  btn.addEventListener('click', () => {
+    let correct = 0;
+    items.forEach(({ item, labels, why, name }) => {
+      const picked = document.querySelector(`input[name="${name}"]:checked`);
+      labels.forEach((lab, j) => {
+        lab.classList.remove('right', 'wrong');
+        if (j === item.ans) lab.classList.add('right');
+        else if (picked && Number(picked.value) === j) lab.classList.add('wrong');
+      });
+      if (picked && Number(picked.value) === item.ans) correct++;
+      why.hidden = false;
+    });
+    scoreEl.textContent = `答對 ${correct} / ${items.length} 題`;
+  });
+  root.append(quizWrap, btn, scoreEl);
+}
+
+/* ---------- 單字庫 ---------- */
+let activeTopic = '全部';
+function renderVocab() {
+  const topics = ['全部', ...new Set(DAYS.map(d => d.topic))];
+  const filters = $('#filters'); filters.innerHTML = '';
+  topics.forEach(t => {
+    const c = el('button', 'chip', t);
+    c.setAttribute('aria-pressed', t === activeTopic ? 'true' : 'false');
+    c.addEventListener('click', () => { activeTopic = t; renderVocab(); });
+    filters.append(c);
+  });
+  const q = $('#q').value.trim().toLowerCase();
+  const list = $('#vocabList'); list.innerHTML = '';
+  let n = 0;
+  DAYS.filter(d => activeTopic === '全部' || d.topic === activeTopic).forEach(d => {
+    d.vocab.forEach(v => {
+      const hay = (v.vi + ' ' + v.zh + ' ' + v.note).toLowerCase();
+      if (q && !hay.includes(q)) return;
+      n++;
+      const card = el('div', 'card');
+      const head = el('div');
+      head.append(el('span', 'vi', v.vi), el('span', 'zhm', v.zh));
+      card.append(head);
+      if (v.note) card.append(el('p', 'note', v.note));
+      card.append(el('p', 'ex', v.ex));
+      list.append(card);
+    });
+  });
+  $('#count').textContent = `共 ${n} 個單字`;
+  if (n === 0) list.append(el('p', 'empty', '找不到符合的單字。'));
+}
+$('#q').addEventListener('input', renderVocab);
+
+/* ---------- 句型 ---------- */
+function renderPatterns() {
+  const root = $('#pattern');
+  root.innerHTML = '';
+  const seen = new Set();
+  DAYS.forEach(d => d.patterns.forEach(p => {
+    if (seen.has(p.pat)) return; seen.add(p.pat);
+    const box = el('div', 'pattern');
+    box.append(el('b', null, p.pat), el('span', null, '　' + p.zh));
+    box.append(el('p', 'ex', p.ex));
+    root.append(box);
+  }));
+}
+
+/* ---------- 初始化 ---------- */
+renderReading(DAYS[0]);
+renderVocab();
+renderPatterns();
+</script>
+</body>
+</html>
