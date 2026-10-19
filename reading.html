@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>閱讀區｜越南語學習室</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#1F4A3D; --green-2:#2F6B58; --cream:#F6F2E8; --paper:#FBF8F1; --card:#FFFDF8;
+  --ink:#1E2B26; --muted:#5B6B63; --gold:#D8A93A; --line:rgba(31,74,61,.13);
+  --tint:#EEF3EA;
+  --serif:"Noto Serif TC",Georgia,serif; --sans:"Noto Sans TC","Be Vietnam Pro",system-ui,sans-serif;
+  --viet:"Be Vietnam Pro","Noto Sans TC",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.7}
+button{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* 頂部導覽（與其他頁面一致） */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:12px clamp(16px,3vw,40px);background:rgba(251,248,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand::before{content:"";flex:none;width:52px;height:42px;background:url("logo-cat.png") center/contain no-repeat;mix-blend-mode:multiply}
+.brand strong{display:block;font-family:var(--serif);font-size:1.12rem;color:var(--green);line-height:1.2}
+.brand small{display:block;font-size:.7rem;color:var(--muted);letter-spacing:.06em}
+nav.menu{display:flex;gap:4px;flex-wrap:wrap}
+nav.menu a{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:8px;font-size:.95rem;position:relative}
+nav.menu a svg{width:18px;height:18px}
+nav.menu a:hover{background:rgba(31,74,61,.06)}
+nav.menu a[aria-current="page"]{color:var(--green);font-weight:500}
+nav.menu a[aria-current="page"]::after{content:"";position:absolute;left:12px;right:12px;bottom:-4px;height:2px;background:var(--green)}
+
+.wrap{max-width:1000px;margin:0 auto;padding:26px clamp(16px,4vw,40px) 64px}
+.crumbs{font-size:.9rem;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.crumbs a:hover{color:var(--green)}
+
+/* 橫幅 */
+.banner{position:relative;overflow:hidden;border-radius:20px;margin:12px 0 26px;padding:28px 30px;min-height:160px;
+  background:linear-gradient(100deg,#F4EFE0 0%,#EADFC6 100%);display:flex;align-items:center}
+.banner h1{font-family:var(--serif);font-size:clamp(1.8rem,3.6vw,2.4rem);color:var(--green);margin:0;line-height:1.25;position:relative;z-index:2}
+.banner .vi-sub{display:block;font-size:.85rem;letter-spacing:.08em;color:var(--muted);margin:4px 0 8px;position:relative;z-index:2}
+.banner p{margin:0;max-width:46ch;position:relative;z-index:2}
+.banner .cat{position:absolute;right:-6px;bottom:-6px;height:150%;max-height:200px;width:auto;z-index:1}
+
+/* 難度卡片 */
+.levels{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.lv{display:flex;flex-direction:column;gap:8px;padding:22px 22px 18px;border-radius:20px;box-shadow:0 10px 24px rgba(31,74,61,.06);transition:transform .2s,box-shadow .2s;min-height:200px}
+.lv:hover{transform:translateY(-3px);box-shadow:0 16px 30px rgba(31,74,61,.12)}
+.lv .code{font-family:var(--serif);font-size:2.6rem;font-weight:700;color:var(--green);line-height:1}
+.lv .nm{font-weight:500;font-size:1.05rem}
+.lv .ds{font-size:.92rem;color:var(--muted);margin:0}
+.lv .foot{margin-top:auto;font-size:.85rem;color:var(--green)}
+.lv .foot.soon{color:var(--muted)}
+.lv.a1{background:#E3EFE4}.lv.a2{background:#DCEBE3}.lv.b1{background:#F4E6D2}.lv.b2{background:#EFDCC8}.lv.c1{background:#E4DDEB}
+
+/* 文章列表 */
+.articles{display:flex;flex-direction:column;gap:12px}
+.art{display:flex;flex-direction:column;gap:4px;padding:18px 22px;border-radius:16px;background:var(--card);border:1px solid var(--line);box-shadow:0 6px 16px rgba(31,74,61,.04);transition:transform .2s}
+.art:hover{transform:translateY(-2px)}
+.art .t{font-family:var(--serif);font-size:1.25rem;color:var(--green);font-weight:600}
+.art .m{font-size:.9rem;color:var(--muted)}
+.tag{display:inline-block;font-size:.8rem;background:var(--tint);color:var(--green);padding:2px 10px;border-radius:999px;margin-right:6px}
+.empty{color:var(--muted);padding:34px 0;text-align:center;background:var(--paper);border:1px dashed var(--line);border-radius:16px}
+
+/* 文章內頁 */
+.art-head h1{font-family:var(--serif);font-size:clamp(1.8rem,4vw,2.4rem);color:var(--green);margin:10px 0 4px;line-height:1.3}
+.passage{margin-top:22px}
+.passage p{font-family:var(--viet);font-size:1.08rem;margin:0 0 1.1em;max-width:68ch;line-height:1.85}
+.zh{display:none;border-left:3px solid var(--green-2);padding:4px 0 4px 16px;margin:0 0 24px;color:var(--muted)}
+.zh.show{display:block}
+.zh p{margin:0 0 .8em;max-width:68ch}
+.toggle{background:var(--green);color:var(--cream);border:0;border-radius:999px;padding:9px 20px;cursor:pointer;font-size:.95rem;margin-top:6px}
+.toggle[aria-pressed="true"]{background:var(--paper);color:var(--green);box-shadow:inset 0 0 0 1px var(--green)}
+
+.quiz{margin-top:40px;padding:26px;border-radius:20px;background:var(--card);border:1px solid var(--line)}
+.quiz h2{font-family:var(--serif);font-size:1.25rem;color:var(--green);margin:0 0 14px}
+.qi{margin-bottom:20px}
+.qi > p{margin:0 0 8px;font-weight:500}
+.opt{display:flex;gap:10px;align-items:center;padding:9px 12px;border:1px solid var(--line);border-radius:10px;margin-bottom:6px;cursor:pointer;background:var(--paper)}
+.opt.right{border-color:var(--green-2);background:#E3EFE4}
+.opt.wrong{border-color:#B5402C}
+.why{font-size:.92rem;color:var(--muted);margin:6px 0 0}
+.why[hidden]{display:none}
+.check{background:var(--green);color:var(--cream);border:0;border-radius:999px;padding:10px 22px;cursor:pointer;margin-top:6px}
+.score{font-family:var(--serif);font-size:1.1rem;margin:10px 0 0}
+
+.back{display:inline-flex;margin-top:34px;color:var(--green);font-size:.95rem}
+.back:hover{text-decoration:underline}
+
+footer{padding:18px;text-align:center;color:var(--muted);font-size:.88rem;border-top:1px solid var(--line)}
+
+@media (max-width:640px){
+  nav.menu{width:100%;justify-content:space-between}
+  nav.menu a{padding:6px 6px;font-size:.85rem}
+  nav.menu a svg{display:none}
+  .banner .cat{opacity:.5}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="越南語學習室首頁">
+    <span><strong>越南語學習室</strong><small>Học tiếng Việt</small></span>
+  </a>
+  <nav class="menu" aria-label="主選單">
+    <a href="index.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>首頁
+    </a>
+    <a href="vocab.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>單字區
+    </a>
+    <a href="dialogue.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/></svg>對話區
+    </a>
+    <a href="reading.html" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>閱讀區
+    </a>
+  </nav>
+</header>
+
+<main class="wrap">
+  <nav class="crumbs" id="crumbs" aria-label="目前位置"></nav>
+  <section id="banner" class="banner"></section>
+  <div id="view"></div>
+</main>
+
+<footer>文章與練習可在程式中自行增加。</footer>
+
+<script>
+/* ================= 難度與文章資料 ================= */
+const LEVELS = [
+  { code: "A1", name: "入門", cls: "a1", desc: "能讀懂最基本的句子，例如自我介紹與家人、日常用語。" },
+  { code: "A2", name: "基礎", cls: "a2", desc: "能讀懂簡短的日常文章，例如購物、天氣與工作。" },
+  { code: "B1", name: "中級", cls: "b1", desc: "能讀懂生活與社會話題的文章，抓到主要內容。" },
+  { code: "B2", name: "中高級", cls: "b2", desc: "能讀懂較長的文章，理解作者的觀點與細節。" },
+  { code: "C1", name: "高級", cls: "c1", desc: "能讀懂複雜的文章，理解隱含的意思與語氣。" }
+];
+
+const ARTICLES = [
+  {
+    id: "gia-dinh", level: "A1", topic: "家庭", title: "我的家人",
+    paragraphs: [
+      "Tôi tên là Minh. Tôi là sinh viên.",
+      "Gia đình tôi có bốn người: bố, mẹ, anh trai và tôi. Bố tôi là bác sĩ. Mẹ tôi là giáo viên. Anh trai tôi làm việc ở Sài Gòn.",
+      "Tôi rất yêu gia đình tôi."
+    ],
+    zh: [
+      "我叫明。我是學生。",
+      "我的家有四個人：爸爸、媽媽、哥哥和我。爸爸是醫生。媽媽是老師。哥哥在西貢工作。",
+      "我非常愛我的家人。"
+    ],
+    quiz: [
+      { q: "「Tôi là sinh viên」是什麼意思？", opts: ["我是學生", "我是老師", "我是醫生"], ans: 0, why: "sinh viên 是學生，tôi 是我。" },
+      { q: "明的家裡有幾個人？", opts: ["三個", "四個", "五個"], ans: 1, why: "原文說 gia đình tôi có bốn người。" },
+      { q: "媽媽是做什麼的？", opts: ["醫生", "老師", "學生"], ans: 1, why: "原文說 Mẹ tôi là giáo viên，giáo viên 是老師。" }
+    ]
+  },
+  {
+    id: "giao-thong-dong-bang", level: "B1", topic: "交通", title: "三角洲的交通變化",
+    paragraphs: [
+      "Đồng bằng sông Cửu Long là vùng sông nước nổi tiếng ở miền Nam Việt Nam. Ở đây, nhiều người vẫn đi lại bằng xuồng hoặc ghe trên các con kênh nhỏ. Tuy nhiên, trong những năm gần đây, hệ thống đường bộ được mở rộng rất nhanh. Các cây cầu mới nối liền những thành phố và xã trước đây rất khó đến. Nhờ vậy, học sinh có thể đến trường nhanh hơn, và nông dân mang nông sản ra chợ dễ dàng hơn.",
+      "Tuy vậy, sự phát triển này cũng gây ra một số vấn đề. Lượng xe máy và xe tải tăng lên, nên tình trạng kẹt xe vào giờ cao điểm trở nên phổ biến hơn. Nhiều chuyên gia cho rằng các thành phố cần quy hoạch bãi đỗ xe tốt hơn và phát triển xe buýt công cộng. Ngoài ra, việc xây dựng đường cao tốc cũng đòi hỏi phải bảo vệ đất nông nghiệp và môi trường.",
+      "Một người đi làm ở Cần Thơ kể rằng anh thường đi xe buýt vì tiết kiệm được tiền xăng và không phải lo tìm chỗ đỗ xe. Anh nói: “Ban đầu tôi cảm thấy hơi bất tiện, nhưng bây giờ tôi thấy thoải mái hơn nhiều.” Theo anh, nếu tuyến xe buýt đến đúng giờ và sạch sẽ hơn, nhiều người sẽ chọn cách di chuyển này.",
+      "Có lẽ trong tương lai, giao thông ở đồng bằng sẽ kết hợp cả đường thủy lẫn đường bộ. Điều quan trọng là phát triển thế nào để vẫn giữ được nét văn hóa sông nước đặc trưng của vùng đất này."
+    ],
+    zh: [
+      "湄公河三角洲是越南南部著名的水鄉地區。許多人仍然在小河道上搭乘小船或木船往來。不過，近年來陸路交通擴建得很快。新建的橋樑連接了過去很難到達的城鎮與鄉村。因此，學生上學更快，農民也更容易把農產品運到市場。",
+      "然而，這種發展也帶來一些問題。摩托車與貨車增加，尖峰時段塞車的情況變得更普遍。許多專家認為，城市應該更妥善規劃停車場，並發展大眾公車。此外，興建高速公路也必須保護農地與環境。",
+      "一位在芹苴工作的上班族說，他經常搭公車，因為可以省下油錢，也不必擔心找停車位。他說：「一開始我覺得有點不方便，但現在舒服多了。」他認為，如果公車準時且更乾淨，很多人會選擇這種交通方式。",
+      "也許未來，三角洲的交通會同時結合水路與陸路。重要的是，發展的方式要能保留這片土地獨特的水鄉文化。"
+    ],
+    quiz: [
+      { q: "根據文章，當地居民過去主要用什麼方式在河道上移動？", opts: ["火車", "小船（xuồng 與 ghe）", "飛機"], ans: 1, why: "第一段提到人們在小河道上搭乘 xuồng 或 ghe。" },
+      { q: "文章說，新建的橋樑帶來什麼好處？", opts: ["學生上學更快，農產品更容易運出", "交通費用變得更貴", "河道不再有船隻"], ans: 0, why: "原文指出學生能更快到校，農民也更容易把農產品運到市場。" },
+      { q: "文章提到車輛增加造成什麼問題？", opts: ["空氣變得更乾淨", "尖峰時段塞車更常見", "停車場越來越多"], ans: 1, why: "摩托車與貨車增加，使 kẹt xe 在 giờ cao điểm 更普遍。" },
+      { q: "在芹苴工作的那位上班族為什麼常搭公車？", opts: ["公車比較漂亮", "省油錢，也不用找停車位", "公司規定必須搭公車"], ans: 1, why: "他說搭公車可以省油錢，也不必擔心找停車位。" }
+    ]
+  }
+];
+
+/* ================= 工具 ================= */
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+const levelOf = code => LEVELS.find(l => l.code === code);
+const articlesOf = code => ARTICLES.filter(a => a.level === code);
+
+function setHead(crumbItems, title, viSub, desc) {
+  const c = $("crumbs"); c.innerHTML = "";
+  crumbItems.forEach((item, i) => {
+    if (i > 0) c.append(el("span", null, "›"));
+    if (item.href) { const a = el("a", null, item.text); a.href = item.href; c.append(a); }
+    else c.append(el("span", null, item.text));
+  });
+  const b = $("banner");
+  b.innerHTML = "";
+  const text = el("div");
+  text.append(el("h1", null, title));
+  if (viSub) text.append(el("span", "vi-sub", viSub));
+  if (desc) text.append(el("p", null, desc));
+  b.append(text);
+  const img = document.createElement("img");
+  img.className = "cat"; img.src = "banner-cat.png"; img.alt = ""; img.setAttribute("aria-hidden", "true");
+  b.append(img);
+}
+
+/* ================= 頁面一：難度選單 ================= */
+function showHome() {
+  setHead([{ text: "閱讀區" }], "閱讀區", "Đọc hiểu", "先選擇你的閱讀程度，再挑選想讀的文章。");
+  const view = $("view"); view.innerHTML = "";
+  const grid = el("div", "levels");
+  LEVELS.forEach(lv => {
+    const count = articlesOf(lv.code).length;
+    const card = el("a", "lv " + lv.cls);
+    card.href = "#/" + lv.code;
+    card.append(el("span", "code", lv.code), el("span", "nm", lv.name), el("p", "ds", lv.desc));
+    card.append(el("span", "foot" + (count ? "" : " soon"), count ? `${count} 篇文章` : "即將推出"));
+    grid.append(card);
+  });
+  view.append(grid);
+}
+
+/* ================= 頁面二：某難度的文章列表 ================= */
+function showLevel(code) {
+  const lv = levelOf(code);
+  setHead([{ text: "閱讀區", href: "#/" }, { text: lv.code + " " + lv.name }],
+    `${lv.code}　${lv.name}`, "Mức độ " + lv.code, lv.desc);
+  const view = $("view"); view.innerHTML = "";
+  const list = articlesOf(code);
+  if (!list.length) {
+    view.append(el("p", "empty", "這個等級的文章即將推出。"));
+    return;
+  }
+  const box = el("div", "articles");
+  list.forEach(a => {
+    const card = el("a", "art");
+    card.href = "#/article/" + a.id;
+    card.append(el("span", "t", a.title));
+    const meta = el("span", "m");
+    meta.append(el("span", "tag", a.level), el("span", null, a.topic + "　·　" + a.paragraphs.length + " 段"));
+    card.append(meta);
+    box.append(card);
+  });
+  view.append(box);
+}
+
+/* ================= 頁面三：文章內頁 ================= */
+function buildQuiz(article) {
+  const wrap = el("section", "quiz");
+  wrap.append(el("h2", null, "閱讀練習"));
+  const items = article.quiz.map((item, i) => {
+    const qi = el("div", "qi");
+    qi.append(el("p", null, `${i + 1}. ${item.q}`));
+    const name = `q-${article.id}-${i}`;
+    const labels = item.opts.map((o, j) => {
+      const lab = el("label", "opt");
+      const inp = document.createElement("input");
+      inp.type = "radio"; inp.name = name; inp.value = j;
+      lab.append(inp, el("span", null, o));
+      qi.append(lab);
+      return lab;
+    });
+    const why = el("p", "why", item.why); why.hidden = true;
+    qi.append(why);
+    wrap.append(qi);
+    return { item, labels, why, name };
+  });
+  const score = el("p", "score");
+  const btn = el("button", "check", "檢查答案");
+  btn.addEventListener("click", () => {
+    let correct = 0;
+    items.forEach(({ item, labels, why, name }) => {
+      const picked = document.querySelector(`input[name="${name}"]:checked`);
+      labels.forEach((lab, j) => {
+        lab.classList.remove("right", "wrong");
+        if (j === item.ans) lab.classList.add("right");
+        else if (picked && Number(picked.value) === j) lab.classList.add("wrong");
+      });
+      if (picked && Number(picked.value) === item.ans) correct++;
+      why.hidden = false;
+    });
+    score.textContent = `答對 ${correct} / ${items.length} 題`;
+  });
+  wrap.append(btn, score);
+  return wrap;
+}
+
+function showArticle(id) {
+  const a = ARTICLES.find(x => x.id === id);
+  if (!a) { showHome(); return; }
+  const lv = levelOf(a.level);
+  setHead([{ text: "閱讀區", href: "#/" }, { text: lv.code + " " + lv.name, href: "#/" + lv.code }, { text: a.title }],
+    a.title, a.topic, "");
+  $("banner").style.display = "none";
+
+  const view = $("view"); view.innerHTML = "";
+  const head = el("div", "art-head");
+  const meta = el("div");
+  meta.append(el("span", "tag", a.level), el("span", "tag", a.topic));
+  head.append(meta, el("h1", null, a.title));
+
+  const toggle = el("button", "toggle", "顯示中文翻譯");
+  toggle.setAttribute("aria-pressed", "false");
+  head.append(toggle);
+
+  const passage = el("div", "passage");
+  a.paragraphs.forEach(t => { const p = el("p", null, t); p.lang = "vi"; passage.append(p); });
+
+  const zh = el("div", "zh");
+  a.zh.forEach(t => zh.append(el("p", null, t)));
+
+  toggle.addEventListener("click", () => {
+    const on = !zh.classList.contains("show");
+    zh.classList.toggle("show", on);
+    toggle.setAttribute("aria-pressed", String(on));
+    toggle.textContent = on ? "隱藏中文翻譯" : "顯示中文翻譯";
+  });
+
+  const back = el("a", "back", "← 返回 " + lv.code + " 文章列表");
+  back.href = "#/" + lv.code;
+
+  view.append(head, passage, zh, buildQuiz(a), back);
+}
+
+/* ================= 路由（使用網址的 # 切換頁面，可用上一頁返回） ================= */
+function route() {
+  const parts = location.hash.replace(/^#\/?/, "").split("/").filter(Boolean);
+  $("banner").style.display = "";
+  if (parts[0] === "article" && parts[1]) showArticle(parts[1]);
+  else if (parts[0] && levelOf(parts[0])) showLevel(parts[0]);
+  else showHome();
+  window.scrollTo(0, 0);
+}
+window.addEventListener("hashchange", route);
+route();
+</script>
+</body>
+</html>
