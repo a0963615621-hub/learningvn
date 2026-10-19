@@ -165,6 +165,11 @@ footer .brand svg{flex:none}
 footer .foot-text{display:block}
 footer .foot-text strong{display:block;font-family:var(--serif);font-size:1.1rem;color:var(--green);line-height:1.25;font-weight:700}
 footer .foot-text small{display:block;font-size:.72rem;color:var(--muted);letter-spacing:.06em;line-height:1.4}
+/* 貓咪標誌：取代原本的蓮花圖示 */
+.brand > svg{display:none}
+.brand::before{content:"";flex:none;width:58px;height:46px;background:url("logo-cat.png") center/contain no-repeat;mix-blend-mode:multiply}
+footer .brand > svg{display:none}
+footer .brand::before{width:62px;height:50px}
 </style>
 </head>
 <body>
@@ -341,7 +346,7 @@ const PHRASES = [
   { vi: "Xin chào!", zh: "你好！" },
   { vi: "Cảm ơn bạn.", zh: "謝謝你。" },
   { vi: "Chúc bạn học vui!", zh: "祝你學習愉快！" },
-  { vi: "Cố lên!", zh: "加油!" }
+  { vi: "Hẹn gặp lại.", zh: "期待再見。" }
 ];
 const greet = document.getElementById('greet');
 let i = 0;

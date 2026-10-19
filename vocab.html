@@ -75,6 +75,9 @@ footer a{color:var(--green)}
   nav.menu{width:100%;justify-content:space-between}
   nav.menu a{padding:6px 8px;font-size:.88rem}
 }
+/* 貓咪標誌：取代原本的蓮花圖示 */
+.brand > svg{display:none}
+.brand::before{content:"";flex:none;width:58px;height:46px;background:url("logo-cat.png") center/contain no-repeat;mix-blend-mode:multiply}
 </style>
 </head>
 <body>
@@ -115,6 +118,7 @@ footer a{color:var(--green)}
     <input class="search" id="q" type="search" placeholder="搜尋越南文或中文" aria-label="搜尋單字">
   </div>
   <div class="count" id="count" aria-live="polite"></div>
+  <p id="voiceNote" style="display:none;font-size:.92rem;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 16px"></p>
   <div class="grid" id="grid"></div>
 </main>
 
@@ -169,13 +173,44 @@ const WORDS = [
 
 /* ---------- 發音（瀏覽器支援時才顯示按鈕） ---------- */
 const canSpeak = "speechSynthesis" in window;
-function speak(text) {
+let viVoice = null;
+function pickVoice() {
+  const voices = speechSynthesis.getVoices();
+  if (!voices.length) return;
+  viVoice = voices.find(v => /^vi[-_]/i.test(v.lang)) || voices.find(v => /viet/i.test(v.name)) || null;
+  const note = document.getElementById("voiceNote");
+  if (note) {
+    note.style.display = viVoice ? "none" : "block";
+    note.textContent = "這台裝置目前沒有越南語語音，發音可能不正確。請到系統設定安裝越南語語音，安裝後重新整理頁面。（Windows：設定 → 時間與語言 → 語音；Mac：系統設定 → 輔助使用 → 語音內容 → 管理語音）";
+  }
+}
+if (canSpeak) {
+  pickVoice();
+  speechSynthesis.onvoiceschanged = pickVoice;
+}
+// 音檔檔名：去掉聲調符號後以連字號連接，例如 xin chào → audio/xin-chao.mp3
+function audioName(text) {
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d").replace(/Đ/g, "D")
+    .toLowerCase().trim().replace(/\s+/g, "-") + ".mp3";
+}
+function speakSystem(text) {
   if (!canSpeak) return;
   speechSynthesis.cancel();
   const u = new SpeechSynthesisUtterance(text);
   u.lang = "vi-VN";
-  u.rate = 0.9;
+  if (viVoice) u.voice = viVoice;
+  u.rate = 0.85;
   speechSynthesis.speak(u);
+}
+let currentAudio = null;
+function speak(text) {
+  if (currentAudio) { currentAudio.pause(); currentAudio = null; }
+  if (canSpeak) speechSynthesis.cancel();
+  const a = new Audio("audio/" + audioName(text));
+  currentAudio = a;
+  a.onerror = () => speakSystem(text);
+  a.play().catch(() => speakSystem(text));
 }
 
 /* ---------- 篩選與渲染 ---------- */
@@ -227,7 +262,7 @@ function renderGrid() {
     titles.append(vi, zh);
     head.append(titles);
 
-    if (canSpeak) {
+    {
       const sp = document.createElement("button");
       sp.className = "speak";
       sp.setAttribute("aria-label", "播放發音：" + w.vi);
