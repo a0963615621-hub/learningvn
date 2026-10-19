@@ -208,15 +208,45 @@ function speakSystem(text) {
   u.rate = 0.85;
   speechSynthesis.speak(u);
 }
-let curAudio = null;
+let autoPlay = true;   // 自動播放開關
+let tokenSeq = 0;      // 每次開啟情境都會換新編號，用來停止舊的播放流程
+let flowAudio = null;
+
+// 用系統語音播放一句，播完才回呼（避免流程卡住，設定逾時保護）
+function systemSpeak(text, done) {
+  if (!canSpeak) { done(); return; }
+  speechSynthesis.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = "vi-VN";
+  if (viVoice) u.voice = viVoice;
+  u.rate = 0.85;
+  u.onend = done;
+  u.onerror = done;
+  speechSynthesis.speak(u);
+  setTimeout(done, 10000);
+}
+
+// 播放一句並等它結束（自動播放流程使用）
+function playLine(text) {
+  return new Promise(resolve => {
+    if (flowAudio) { flowAudio.pause(); flowAudio = null; }
+    if (canSpeak) speechSynthesis.cancel();
+    let finished = false;
+    const done = () => { if (!finished) { finished = true; resolve(); } };
+    const a = new Audio("audio/dialogue/" + fileName(text));
+    flowAudio = a;
+    a.onended = done;
+    a.onerror = () => systemSpeak(text, done);
+    a.play().catch(() => systemSpeak(text, done));
+    setTimeout(done, 10000);
+  });
+}
+
+// 點喇叭手動播放（不影響自動播放流程）
 function speak(text) {
-  if (curAudio) { curAudio.pause(); curAudio = null; }
-  if (canSpeak) speechSynthesis.cancel();
   const a = new Audio("audio/dialogue/" + fileName(text));
-  curAudio = a;
-  const fallback = () => speakSystem(text);
-  a.onerror = fallback;
-  a.play().catch(fallback);
+  a.onerror = () => speakSystem(text);
+  a.play().catch(() => speakSystem(text));
 }
 function speakBtn(text) {
   const b = el("button", "speak");
@@ -270,7 +300,7 @@ function showScenario(id) {
   if (!s) { showList(); return; }
   setHead([{ text: "對話區", href: "#/" }, { text: s.title }], s.title, s.topic + "　·　" + s.level, s.desc);
 
-  run = { s, ptr: 0, score: 0, total: s.steps.filter(st => st.who === "me").length, showZh: false };
+  run = { s, ptr: 0, score: 0, total: s.steps.filter(st => st.who === "me").length, showZh: false, token: ++tokenSeq };
 
   const view = $("view"); view.innerHTML = "";
   const bar = el("div", "toolbar");
@@ -282,7 +312,14 @@ function showScenario(id) {
     zhBtn.textContent = run.showZh ? "隱藏中文" : "顯示中文";
     document.querySelectorAll(".msg .zh").forEach(z => z.classList.toggle("show", run.showZh));
   });
-  bar.append(el("span", null, "你扮演客人"), zhBtn);
+  const autoBtn = el("button", "toggle", autoPlay ? "自動播放：開" : "自動播放：關");
+  autoBtn.setAttribute("aria-pressed", String(autoPlay));
+  autoBtn.addEventListener("click", () => {
+    autoPlay = !autoPlay;
+    autoBtn.setAttribute("aria-pressed", String(autoPlay));
+    autoBtn.textContent = autoPlay ? "自動播放：開" : "自動播放：關";
+  });
+  bar.append(el("span", null, "你扮演客人"), autoBtn, zhBtn);
   view.append(bar);
 
   const chat = el("div", "chat"); chat.id = "chat";
@@ -312,12 +349,19 @@ function addBubble(who, line) {
   $("chat").scrollTop = $("chat").scrollHeight;
 }
 
-function playUntilChoice() {
+async function playUntilChoice() {
+  const token = run.token;
   const steps = run.s.steps;
   while (run.ptr < steps.length && steps[run.ptr].who === "staff") {
-    addBubble("staff", steps[run.ptr]);
+    const line = steps[run.ptr];
+    addBubble("staff", line);
     run.ptr++;
+    if (autoPlay) {
+      await playLine(line.vi);
+      if (token !== run.token) return;   // 已離開此情境
+    }
   }
+  if (token !== run.token) return;
   if (run.ptr >= steps.length) { showResult(); return; }
   renderOptions(steps[run.ptr]);
 }
@@ -350,7 +394,12 @@ function renderOptions(step) {
         feedback.textContent = opt.why;
         addBubble("me", opt);
         run.ptr++;
-        setTimeout(playUntilChoice, 500);
+        if (autoPlay) {
+          const token = run.token;
+          playLine(opt.vi).then(() => { if (token === run.token) setTimeout(playUntilChoice, 300); });
+        } else {
+          setTimeout(playUntilChoice, 500);
+        }
       } else {
         attempts++;
         row.classList.add("wrong");
