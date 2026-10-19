@@ -133,7 +133,7 @@ footer .icons svg{width:18px;height:18px}
 }
 /* 風景輪播 */
 /* 調整模糊程度：數值越大越模糊，設為 0px 即為清晰 */
-:root{--blur:1px}
+:root{--blur:0px}
 .hero-art{position:relative;grid-area:1/1;height:480px;margin-right:calc(-1 * clamp(18px,5vw,64px))}
 .slides{position:absolute;top:0;bottom:0;right:0;left:22%;overflow:hidden;
   -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 40%);mask-image:linear-gradient(to right,transparent 0%,#000 40%)}
@@ -147,10 +147,10 @@ footer .icons svg{width:18px;height:18px}
 @media (prefers-reduced-motion: reduce){.slide{transition:none}}
 /* 由遠到近的漸進模糊：越靠左越模糊，並淡入米色背景 */
 .fade-blur{position:absolute;top:0;bottom:0;left:0;width:62%;z-index:2;pointer-events:none}
-.fade-blur i{position:absolute;inset:0;display:block;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.fade-blur i{position:absolute;inset:0;display:block;-webkit-backdrop-filter:blur(6px);backdrop-filter:blur(6px)}
 .fade-blur .b1{-webkit-mask-image:linear-gradient(to right,#000 0%,transparent 55%);mask-image:linear-gradient(to right,#000 0%,transparent 55%)}
-.fade-blur .b2{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);-webkit-mask-image:linear-gradient(to right,#000 15%,transparent 75%);mask-image:linear-gradient(to right,#000 15%,transparent 75%)}
-.fade-blur .b3{-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);-webkit-mask-image:linear-gradient(to right,#000 35%,transparent 100%);mask-image:linear-gradient(to right,#000 35%,transparent 100%)}
+.fade-blur .b2{-webkit-backdrop-filter:blur(3px);backdrop-filter:blur(3px);-webkit-mask-image:linear-gradient(to right,#000 15%,transparent 75%);mask-image:linear-gradient(to right,#000 15%,transparent 75%)}
+.fade-blur .b3{-webkit-backdrop-filter:blur(1px);backdrop-filter:blur(1px);-webkit-mask-image:linear-gradient(to right,#000 35%,transparent 100%);mask-image:linear-gradient(to right,#000 35%,transparent 100%)}
 .fade-blur::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(244,240,228,.85),rgba(244,240,228,0) 90%)}
 @media (max-width:860px){
   .hero{padding-bottom:110px}
