@@ -1,0 +1,369 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>越南語學習室｜首頁</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<style>
+:root{
+  --green:#1F4A3D; --green-2:#2F6B58; --cream:#F6F2E8; --paper:#FBF8F1;
+  --ink:#1E2B26; --muted:#5B6B63; --gold:#D8A93A;
+  --sage:#DCE8DE; --peach:#F4E6D2; --mint:#D6E9E3;
+  --serif:"Noto Serif TC",Georgia,serif; --sans:"Noto Sans TC","Be Vietnam Pro",system-ui,sans-serif;
+  --viet:"Be Vietnam Pro","Noto Sans TC",system-ui,sans-serif;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.7;
+  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+a{color:inherit;text-decoration:none}
+a:focus-visible,button:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+
+/* 頂部導覽 */
+.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;justify-content:space-between;
+  gap:16px;padding:14px clamp(18px,4vw,56px);background:rgba(251,248,241,.92);backdrop-filter:blur(8px);
+  border-bottom:1px solid rgba(31,74,61,.08)}
+.brand{display:flex;align-items:center;gap:10px;min-width:0}
+.brand strong{display:block;font-family:var(--serif);font-size:1.15rem;color:var(--green);line-height:1.2}
+.brand small{display:block;font-size:.72rem;color:var(--muted);letter-spacing:.06em}
+nav.menu{display:flex;gap:6px;flex-wrap:wrap}
+nav.menu a{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:8px;font-size:.95rem;color:var(--ink);position:relative}
+nav.menu a svg{width:18px;height:18px;flex:none}
+nav.menu a:hover{background:rgba(31,74,61,.06)}
+nav.menu a[aria-current="page"]::after{content:"";position:absolute;left:12px;right:12px;bottom:-4px;height:2px;background:var(--green)}
+.search{background:none;border:0;padding:8px;cursor:pointer;color:var(--ink)}
+.search svg{width:20px;height:20px}
+
+/* Hero */
+.hero{position:relative;overflow:hidden;min-height:520px;display:grid;grid-template-columns:1fr;align-items:center;
+  padding:clamp(40px,6vw,80px) clamp(18px,5vw,64px) 120px;
+  background:linear-gradient(100deg,#F4F0E4 0%,#F4EFE0 45%,#EADFC6 100%)}
+.hero-text{position:relative;z-index:3;grid-area:1/1;max-width:46%;animation:rise .8s ease both}
+.hero h1{font-family:var(--serif);font-weight:700;font-size:clamp(2.1rem,5vw,3.6rem);line-height:1.3;color:var(--green);margin:0 0 18px}
+.u{position:relative;white-space:nowrap}
+.u::after{content:"";position:absolute;left:-4%;right:-4%;bottom:-.12em;height:.22em;border-radius:99px;
+  background:var(--gold);opacity:.85;transform:rotate(-1deg);z-index:-1}
+.hero p.lead{font-size:1.08rem;color:var(--muted);margin:0 0 6px}
+.greet{min-height:2.2em;margin:18px 0 26px;font-family:var(--viet);color:var(--green-2);font-size:1rem}
+.greet b{font-weight:600;display:block}
+.greet span{color:var(--muted);font-size:.92rem}
+.greet.fade{animation:fadeLine .5s ease both}
+.cta{display:inline-flex;align-items:center;gap:14px;background:var(--green);color:#F6F2E8;padding:14px 26px;border-radius:999px;
+  font-size:1rem;box-shadow:0 8px 20px rgba(31,74,61,.22);transition:transform .2s ease,background .2s}
+.cta:hover{background:var(--green-2);transform:translateY(-1px)}
+
+.hero-art{position:relative;height:340px;z-index:1;animation:rise 1s .15s ease both}
+.hero-art .sun{position:absolute;right:12%;top:8%;width:120px;height:120px;border-radius:50%;background:radial-gradient(circle,#F7D878,#E9B54C 70%,transparent 72%);opacity:.7}
+.hero-art .roof{position:absolute;left:0;right:0;bottom:0;height:58%;
+  background:linear-gradient(#D9B873,#C99C58);clip-path:polygon(0 40%,12% 22%,24% 36%,36% 14%,50% 32%,64% 10%,78% 30%,90% 18%,100% 34%,100% 100%,0 100%);opacity:.9}
+.hero-art .water{position:absolute;left:0;right:0;bottom:0;height:22%;background:linear-gradient(#7FA99A,#4E7F70);opacity:.75}
+.hero-art .flag{position:absolute;right:6%;top:4%;width:86px;height:58px;background:#C8102E;border-radius:3px;transform:rotate(-4deg);box-shadow:0 6px 16px rgba(0,0,0,.12)}
+.hero-art .flag::after{content:"";position:absolute;left:50%;top:50%;width:26px;height:26px;transform:translate(-50%,-50%);background:#FFD23F;
+  clip-path:polygon(50% 0,61% 35%,98% 35%,68% 57%,79% 91%,50% 70%,21% 91%,32% 57%,2% 35%,39% 35%)}
+.hero-art .lantern{position:absolute;width:38px;height:46px;border-radius:50%;background:radial-gradient(circle at 50% 40%,#F0604A,#B3271B);box-shadow:0 0 18px rgba(240,96,74,.35)}
+.hero-art .lantern::before,.hero-art .lantern::after{content:"";position:absolute;left:50%;transform:translateX(-50%);width:2px;height:8px;background:#7A2A1C;top:-8px}
+.hero-art .lantern::after{top:auto;bottom:-8px}
+.hero-art .l1{left:30%;top:16%}.hero-art .l2{left:44%;top:30%;width:30px;height:38px}.hero-art .l3{left:20%;top:44%;width:26px;height:32px}
+.hero-art img{position:absolute;right:0;bottom:0;max-height:100%;max-width:100%;object-fit:contain;z-index:2}
+
+/* 卡片區（與 hero 重疊） */
+.cards{position:relative;z-index:3;margin:-72px clamp(18px,5vw,64px) 0;display:grid;grid-template-columns:repeat(3,1fr);gap:20px}
+.card{position:relative;display:flex;flex-direction:column;border-radius:22px;padding:26px 26px 24px;min-height:340px;
+  box-shadow:0 14px 30px rgba(31,74,61,.08);transition:transform .25s ease,box-shadow .25s ease;animation:rise .9s ease both}
+.card:nth-child(2){animation-delay:.1s}.card:nth-child(3){animation-delay:.2s}
+.card:hover{transform:translateY(-4px);box-shadow:0 18px 36px rgba(31,74,61,.12)}
+.card.c1{background:var(--sage)}.card.c2{background:var(--peach)}.card.c3{background:var(--mint)}
+.card .art{height:150px;position:relative;margin-bottom:10px}
+.card h2{font-family:var(--serif);font-size:1.5rem;color:var(--green);margin:auto 0 6px;display:flex;align-items:center;gap:12px}
+.card h2::after{content:"";height:1px;width:84px;background:rgba(31,74,61,.25)}
+.card p{margin:0;color:var(--muted);font-size:.98rem;max-width:22ch}
+.card .go{position:absolute;right:22px;bottom:22px;width:48px;height:48px;border-radius:50%;background:var(--green);color:#F6F2E8;
+  display:grid;place-items:center;transition:transform .2s}
+.card:hover .go{transform:translateX(3px)}
+.card .go svg{width:20px;height:20px}
+.card.soon .tag{position:absolute;top:22px;right:22px;font-size:.78rem;background:rgba(255,255,255,.7);color:var(--muted);padding:3px 10px;border-radius:999px}
+
+/* 卡片內插圖（原創 SVG） */
+.flash{position:absolute;left:50%;top:10px;width:150px;height:96px;transform:translateX(-50%) rotate(-6deg);background:#FFFDF7;border-radius:12px;
+  box-shadow:0 10px 18px rgba(31,74,61,.15);display:grid;place-items:center;font-family:var(--viet);font-size:1.35rem;font-weight:600;color:var(--ink)}
+.flash::before{content:"";position:absolute;left:-10px;top:12px;width:150px;height:96px;border-radius:12px;background:#EEE6D4;z-index:-1;transform:rotate(-4deg)}
+.leaf{position:absolute;width:44px;height:26px;background:#5E8F6F;border-radius:0 60% 0 60%;opacity:.85}
+.bubble{position:absolute;border-radius:28px;height:62px}
+.bubble.b1{left:24%;top:8px;width:120px;background:#FFFDF7;box-shadow:0 8px 16px rgba(31,74,61,.12)}
+.bubble.b2{left:50%;top:34px;width:112px;background:#3E7A63}
+.bubble i{position:absolute;top:50%;width:7px;height:7px;border-radius:50%;background:currentColor;transform:translateY(-50%)}
+.book{position:absolute;left:50%;top:18px;width:230px;height:110px;transform:translateX(-50%)}
+.book .page{position:absolute;top:0;width:112px;height:88px;background:#FFFDF7;border-radius:6px 6px 2px 2px}
+.book .page.l{left:0;transform:skewY(-6deg);transform-origin:right top}
+.book .page.r{right:0;transform:skewY(6deg);transform-origin:left top}
+.book .base{position:absolute;left:-6px;right:-6px;bottom:0;height:28px;background:#2F6B58;border-radius:8px}
+.book .mark{position:absolute;right:58px;bottom:-14px;width:12px;height:34px;background:#A6652E;clip-path:polygon(0 0,100% 0,100% 100%,50% 78%,0 100%)}
+
+/* 頁尾 */
+footer{margin-top:56px;border-top:1px solid rgba(31,74,61,.12);padding:28px clamp(18px,5vw,64px) 36px;display:flex;justify-content:space-between;
+  align-items:center;flex-wrap:wrap;gap:18px}
+footer .links{display:flex;gap:14px;flex-wrap:wrap;font-size:.92rem;color:var(--muted)}
+footer .links a:hover{color:var(--green)}
+footer .links span{color:rgba(31,74,61,.3)}
+footer .icons{display:flex;gap:12px;align-items:center}
+footer .icons a{width:38px;height:38px;border-radius:50%;display:grid;place-items:center;background:rgba(31,74,61,.06);color:var(--green)}
+footer .icons svg{width:18px;height:18px}
+.totop{width:44px;height:44px;border-radius:50%;border:1px solid rgba(31,74,61,.2);background:var(--paper);color:var(--green);cursor:pointer;display:grid;place-items:center}
+.totop svg{width:18px;height:18px}
+
+@keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:none}}
+@keyframes fadeLine{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:none}}
+
+/* 響應式 */
+@media (max-width:860px){
+  .top{flex-wrap:wrap}
+  nav.menu{order:3;width:100%;justify-content:space-between}
+  nav.menu a{padding:6px 8px;font-size:.88rem}
+  .hero{grid-template-columns:1fr;min-height:0;padding-bottom:110px}
+  .hero-art{height:240px}
+  .cards{grid-template-columns:1fr;margin-top:-64px}
+  .card{min-height:0}
+  .card p{max-width:none}
+}
+@media (prefers-reduced-motion: reduce){
+  *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+}
+/* 風景輪播 */
+/* 調整模糊程度：數值越大越模糊，設為 0px 即為清晰 */
+:root{--blur:1px}
+.hero-art{position:relative;grid-area:1/1;height:480px;margin-right:calc(-1 * clamp(18px,5vw,64px))}
+.slides{position:absolute;top:0;bottom:0;right:0;left:22%;overflow:hidden;
+  -webkit-mask-image:linear-gradient(to right,transparent 0%,#000 40%);mask-image:linear-gradient(to right,transparent 0%,#000 40%)}
+.slide{position:absolute;inset:0;opacity:0;transition:opacity 1.2s ease}
+.slide.on{opacity:1}
+.slide svg,.slide img{position:absolute;inset:-12px;width:calc(100% + 24px);height:calc(100% + 24px);object-fit:cover;filter:blur(var(--blur));transform:scale(1.02)}
+.dots{position:absolute;left:50%;bottom:14px;transform:translateX(-50%);display:flex;gap:8px;z-index:3}
+.dots button{width:9px;height:9px;border-radius:50%;border:0;background:rgba(255,255,255,.6);cursor:pointer;padding:0;transition:width .3s,background .3s}
+.dots button[aria-current="true"]{background:#fff;width:24px;border-radius:99px}
+@media (max-width:860px){.hero-art{height:320px}}
+@media (prefers-reduced-motion: reduce){.slide{transition:none}}
+/* 由遠到近的漸進模糊：越靠左越模糊，並淡入米色背景 */
+.fade-blur{position:absolute;top:0;bottom:0;left:0;width:62%;z-index:2;pointer-events:none}
+.fade-blur i{position:absolute;inset:0;display:block;-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
+.fade-blur .b1{-webkit-mask-image:linear-gradient(to right,#000 0%,transparent 55%);mask-image:linear-gradient(to right,#000 0%,transparent 55%)}
+.fade-blur .b2{-webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);-webkit-mask-image:linear-gradient(to right,#000 15%,transparent 75%);mask-image:linear-gradient(to right,#000 15%,transparent 75%)}
+.fade-blur .b3{-webkit-backdrop-filter:blur(2px);backdrop-filter:blur(2px);-webkit-mask-image:linear-gradient(to right,#000 35%,transparent 100%);mask-image:linear-gradient(to right,#000 35%,transparent 100%)}
+.fade-blur::after{content:"";position:absolute;inset:0;background:linear-gradient(to right,rgba(244,240,228,.85),rgba(244,240,228,0) 90%)}
+@media (max-width:860px){
+  .hero{padding-bottom:110px}
+  .hero-text{max-width:none;grid-area:1/1}
+  .hero-art{grid-area:2/1;height:320px;margin:0 -18px}
+  .slides{left:0;-webkit-mask-image:linear-gradient(to bottom,transparent 0%,#000 25%);mask-image:linear-gradient(to bottom,transparent 0%,#000 25%)}
+  .fade-blur{display:none}
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="brand" href="index.html" aria-label="越南語學習室首頁">
+    <svg width="40" height="40" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M20 4c-4 6-9 10-10 18 3 0 6 2 10 6 4-4 7-6 10-6-1-8-6-12-10-18z" fill="#D8A93A"/>
+      <path d="M20 14c-2 4-5 7-6 12 2 0 4 1 6 3 2-2 4-3 6-3-1-5-4-8-6-12z" fill="#1F4A3D"/>
+      <path d="M4 30c6-2 10 0 16 4 6-4 10-6 16-4-6 4-10 6-16 2-6 4-10 2-16-2z" fill="#2F6B58"/>
+    </svg>
+    <span><strong>越南語學習室</strong><small>Học tiếng Việt</small></span>
+  </a>
+
+  <nav class="menu" aria-label="主選單">
+    <a href="index.html" aria-current="page">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M3 11l9-7 9 7v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>首頁
+    </a>
+    <a href="vocab.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M2 5h7a3 3 0 0 1 3 3v12a2 2 0 0 0-2-2H2zM22 5h-7a3 3 0 0 0-3 3v12a2 2 0 0 1 2-2h8z"/></svg>單字區
+    </a>
+    <a href="dialogue.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.4A8 8 0 1 1 21 12z"/></svg>對話區
+    </a>
+    <a href="reading.html">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="4" y="3" width="16" height="18" rx="2"/><path d="M8 8h8M8 12h8M8 16h5"/></svg>閱讀區
+    </a>
+  </nav>
+
+  <button class="search" aria-label="搜尋">
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="M20 20l-4-4"/></svg>
+  </button>
+</header>
+
+<main>
+  <section class="hero">
+    <div class="hero-text">
+      <h1>從今天開始，<br>自然說<span class="u">越南語</span>。</h1>
+      <p class="lead">用單字、對話與閱讀，<br>一步步累積屬於你的越南語能力。</p>
+      <div class="greet" id="greet" aria-live="polite"></div>
+      <a class="cta" href="vocab.html">開始學習
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M5 12h14M13 6l6 6-6 6"/></svg>
+      </a>
+    </div>
+
+    <div class="hero-art" aria-label="越南風景輪播">
+      <div class="slides">
+        <div class="slide on">
+          <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><linearGradient id="sky1" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#F8EBC4"/><stop offset="1" stop-color="#F2D59A"/></linearGradient></defs>
+            <rect width="600" height="440" fill="url(#sky1)"/>
+            <circle cx="470" cy="110" r="46" fill="#FBE7A0"/>
+            <g fill="#E8B26A"><rect x="0" y="170" width="92" height="120"/><rect x="96" y="160" width="82" height="130"/><rect x="182" y="176" width="96" height="114"/><rect x="282" y="164" width="82" height="126"/><rect x="368" y="172" width="100" height="118"/><rect x="472" y="160" width="130" height="130"/></g>
+            <g fill="#9C4A2A"><polygon points="-6,172 46,140 98,172"/><polygon points="92,162 137,132 188,162"/><polygon points="178,178 230,150 280,178"/><polygon points="278,166 323,138 368,166"/><polygon points="364,174 418,146 470,174"/><polygon points="466,162 530,130 606,162"/></g>
+            <g fill="#D8412F"><circle cx="30" cy="200" r="9"/><circle cx="140" cy="196" r="9"/><circle cx="230" cy="206" r="9"/><circle cx="320" cy="200" r="9"/><circle cx="412" cy="206" r="9"/><circle cx="520" cy="196" r="9"/></g>
+            <rect y="290" width="600" height="150" fill="#7FB5A4"/>
+            <g fill="#FFFFFF" opacity=".35"><rect x="40" y="310" width="120" height="3"/><rect x="300" y="340" width="160" height="3"/><rect x="460" y="372" width="110" height="3"/></g>
+            <path d="M100 330h70l-10 12h-50z" fill="#5A3A22"/><path d="M340 356h80l-11 13h-58z" fill="#5A3A22"/>
+          </svg>
+          <img src="scenes/1.jpg" alt="" onerror="this.remove()">
+        </div>
+        <div class="slide">
+          <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><linearGradient id="sky2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#DCEBEA"/><stop offset="1" stop-color="#EEF3E6"/></linearGradient><linearGradient id="sea2" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#6FA7A0"/><stop offset="1" stop-color="#3F7A74"/></linearGradient></defs>
+            <rect width="600" height="440" fill="url(#sky2)"/>
+            <rect y="250" width="600" height="190" fill="url(#sea2)"/>
+            <g fill="#4E7D6E"><path d="M0 250Q40 150 90 230Q130 120 180 250Z"/><path d="M150 250Q210 110 280 240Q320 170 360 250Z"/><path d="M330 250Q380 130 440 230Q480 160 520 250Z"/><path d="M480 250Q530 150 600 240V250Z"/></g>
+            <g fill="#2F5F55" opacity=".6"><path d="M0 250Q20 210 50 240Z"/><path d="M330 250Q360 200 400 240Z"/></g>
+            <path d="M250 330h120l-16 18h-88z" fill="#2B3B3A"/><rect x="290" y="306" width="46" height="24" fill="#FFFDF7"/>
+            <path d="M80 380h60l-8 10h-44z" fill="#2B3B3A"/>
+          </svg>
+          <img src="scenes/2.jpg" alt="" onerror="this.remove()">
+        </div>
+        <div class="slide">
+          <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><linearGradient id="sky3" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#CFE8DB"/><stop offset="1" stop-color="#F1F0D6"/></linearGradient></defs>
+            <rect width="600" height="440" fill="url(#sky3)"/>
+            <rect y="300" width="600" height="140" fill="#5E9C8E"/>
+            <rect y="270" width="600" height="40" fill="#7DB36A"/>
+            <g fill="#4F8A4A"><ellipse cx="60" cy="200" rx="46" ry="34"/><ellipse cx="180" cy="186" rx="40" ry="30"/><ellipse cx="520" cy="196" rx="50" ry="36"/></g>
+            <g fill="#6B4F2E"><rect x="56" y="230" width="6" height="50"/><rect x="176" y="216" width="6" height="60"/><rect x="516" y="232" width="6" height="50"/></g>
+            <path d="M130 340h110l-14 16h-84z" fill="#6B4A2A"/><path d="M360 360h100l-12 14h-76z" fill="#6B4A2A"/>
+            <g fill="#A8C98A" opacity=".8"><rect x="90" y="330" width="22" height="4"/><rect x="420" y="352" width="30" height="4"/></g>
+          </svg>
+          <img src="scenes/3.jpg" alt="" onerror="this.remove()">
+        </div>
+        <div class="slide">
+          <svg viewBox="0 0 600 440" preserveAspectRatio="xMidYMid slice" aria-hidden="true">
+            <defs><linearGradient id="sky4" x1="0" y1="0" x2="0" y2="1"><stop offset="0" stop-color="#E6EEF0"/><stop offset="1" stop-color="#F7F3E3"/></linearGradient></defs>
+            <rect width="600" height="440" fill="url(#sky4)"/>
+            <path d="M0 200L120 110L210 180L310 90L420 190L520 120L600 180V440H0Z" fill="#8BA79A"/>
+            <path d="M0 260L150 180L260 250L380 170L600 260V440H0Z" fill="#6F9B5B"/>
+            <g fill="#8DB36E"><path d="M0 300Q300 260 600 300V340Q300 300 0 340Z"/></g>
+            <g fill="#A9C77E"><path d="M0 360Q300 320 600 360V390Q300 350 0 390Z"/></g>
+            <g fill="#C7DC9A"><path d="M0 410Q300 380 600 410V440H0Z"/></g>
+          </svg>
+          <img src="scenes/4.jpg" alt="" onerror="this.remove()">
+        </div>
+      </div>
+      <div class="fade-blur" aria-hidden="true"><i class="b1"></i><i class="b2"></i><i class="b3"></i></div>
+      <div class="dots" role="group" aria-label="選擇圖片">
+        <button data-i="0" aria-label="第 1 張" aria-current="true"></button>
+        <button data-i="1" aria-label="第 2 張"></button>
+        <button data-i="2" aria-label="第 3 張"></button>
+        <button data-i="3" aria-label="第 4 張"></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="cards" aria-label="功能入口">
+    <a class="card c1" href="vocab.html">
+      <div class="art" aria-hidden="true">
+        <div class="leaf" style="left:8%;bottom:18px;transform:rotate(-20deg)"></div>
+        <div class="leaf" style="right:6%;top:24px;transform:rotate(30deg)"></div>
+        <div class="flash">xin chào</div>
+      </div>
+      <h2>單字區</h2>
+      <p>從生活主題開始，<br>建立紮實的詞彙量。</p>
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card c2" href="dialogue.html">
+      <div class="art" aria-hidden="true">
+        <div class="bubble b1"></div>
+        <div class="bubble b2" style="color:#F6F2E8"><i style="left:22%"></i><i style="left:44%"></i><i style="left:66%"></i></div>
+        <div class="leaf" style="right:4%;bottom:10px;transform:rotate(-30deg)"></div>
+      </div>
+      <h2>對話區</h2>
+      <p>學習實用的生活會話，<br>自然開口說越南語。</p>
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+
+    <a class="card c3" href="reading.html">
+      <div class="art" aria-hidden="true">
+        <div class="book">
+          <div class="page l"></div><div class="page r"></div><div class="base"></div><div class="mark"></div>
+        </div>
+        <div class="leaf" style="right:4%;top:20px;transform:rotate(25deg)"></div>
+      </div>
+      <h2>閱讀區</h2>
+      <p>透過文章閱讀，<br>提升理解力與語感。</p>
+      <span class="go" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M5 12h14M13 6l6 6-6 6"/></svg></span>
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div class="brand">
+    <svg width="34" height="34" viewBox="0 0 40 40" aria-hidden="true">
+      <path d="M20 4c-4 6-9 10-10 18 3 0 6 2 10 6 4-4 7-6 10-6-1-8-6-12-10-18z" fill="#D8A93A"/>
+      <path d="M20 14c-2 4-5 7-6 12 2 0 4 1 6 3 2-2 4-3 6-3-1-5-4-8-6-12z" fill="#1F4A3D"/>
+    </svg>
+    <span><strong style="font-family:var(--serif);color:var(--green)">越南語學習室</strong><br><small style="color:var(--muted)">Học tiếng Việt</small></span>
+  </div>
+  <div class="links">
+    <a href="#">關於本站</a><span>|</span>
+    <a href="#">學習資源</a><span>|</span>
+    <a href="#">使用說明</a><span>|</span>
+    <a href="#">聯絡我</a>
+  </div>
+  <div class="icons">
+    <a href="#" aria-label="GitHub"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M12 2a10 10 0 0 0-3.2 19.5c.5.1.7-.2.7-.5v-1.8c-2.8.6-3.4-1.2-3.4-1.2-.5-1.2-1.1-1.5-1.1-1.5-.9-.6.1-.6.1-.6 1 .1 1.5 1 1.5 1 .9 1.6 2.4 1.1 3 .9.1-.7.4-1.1.6-1.4-2.2-.3-4.6-1.1-4.6-5 0-1.1.4-2 1-2.7-.1-.3-.4-1.3.1-2.6 0 0 .8-.3 2.7 1a9.4 9.4 0 0 1 5 0c1.9-1.3 2.7-1 2.7-1 .5 1.3.2 2.3.1 2.6.6.7 1 1.6 1 2.7 0 3.9-2.4 4.7-4.6 5 .4.3.7.9.7 1.9v2.8c0 .3.2.6.7.5A10 10 0 0 0 12 2z"/></svg></a>
+    <a href="#" aria-label="YouTube"><svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M23 7.2a3 3 0 0 0-2.1-2.1C19 4.6 12 4.6 12 4.6s-7 0-8.9.5A3 3 0 0 0 1 7.2 31 31 0 0 0 .5 12a31 31 0 0 0 .5 4.8 3 3 0 0 0 2.1 2.1c1.9.5 8.9.5 8.9.5s7 0 8.9-.5a3 3 0 0 0 2.1-2.1 31 31 0 0 0 .5-4.8 31 31 0 0 0-.5-4.8zM9.7 15.1V8.9l5.8 3.1z"/></svg></a>
+    <a href="#" aria-label="Email"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg></a>
+    <button class="totop" aria-label="回到頂端" onclick="window.scrollTo({top:0,behavior:'smooth'})">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M12 19V5M6 11l6-6 6 6"/></svg>
+    </button>
+  </div>
+</footer>
+
+<script>
+/* 首頁動態小語：一次只做一個重點動態，每 3.6 秒輪換 */
+const PHRASES = [
+  { vi: "Xin chào!", zh: "你好！" },
+  { vi: "Cảm ơn bạn.", zh: "謝謝你。" },
+  { vi: "Chúc bạn học vui!", zh: "祝你學習愉快！" },
+  { vi: "Hẹn gặp lại.", zh: "期待再見。" }
+];
+const greet = document.getElementById('greet');
+let i = 0;
+function show() {
+  const p = PHRASES[i];
+  greet.classList.remove('fade'); void greet.offsetWidth; greet.classList.add('fade');
+  greet.innerHTML = '';
+  const b = document.createElement('b'); b.textContent = p.vi;
+  const s = document.createElement('span'); s.textContent = p.zh;
+  greet.append(b, s);
+  i = (i + 1) % PHRASES.length;
+}
+show();
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(show, 3600);
+/* 風景輪播：每 5 秒換一張，可按圓點切換 */
+const SLIDE_MS = 5000;
+const slides = document.querySelectorAll('.slide');
+const dotBtns = document.querySelectorAll('.dots button');
+let s = 0;
+function goTo(n) {
+  s = (n + slides.length) % slides.length;
+  slides.forEach((el, k) => el.classList.toggle('on', k === s));
+  dotBtns.forEach((b, k) => b.setAttribute('aria-current', k === s ? 'true' : 'false'));
+}
+dotBtns.forEach(b => b.addEventListener('click', () => goTo(Number(b.dataset.i))));
+if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
+  setInterval(() => goTo(s + 1), SLIDE_MS);
+}
+</script>
+</body>
+</html>
