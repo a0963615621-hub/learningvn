@@ -88,6 +88,10 @@ nav.menu a[aria-current="page"]::after{content:"";position:absolute;left:12px;ri
 .speak:hover{background:var(--green);color:var(--cream)}
 .speak svg{width:16px;height:16px}
 .empty{color:var(--muted);padding:30px 0;text-align:center}
+.ev-line{display:flex;align-items:flex-start;gap:8px}
+.ev-line .ev{flex:1;min-width:0}
+.ev-line .speak{width:28px;height:28px;margin-top:-2px}
+.ev-line .speak svg{width:14px;height:14px}
 
 /* 分頁 */
 .pager{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:18px;font-size:.92rem;color:var(--muted)}
@@ -271,6 +275,23 @@ function speak(text) {
   a.play().catch(fallback);
 }
 
+// 例句音檔：去掉聲調、只保留英數字，以連字號連接，存放在 audio/examples
+function exampleName(text) {
+  return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
+    .replace(/đ/g, "d").replace(/Đ/g, "D")
+    .toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/^-+|-+$/g, "") + ".mp3";
+}
+let exAudio = null;
+function speakExample(text) {
+  if (exAudio) { exAudio.pause(); exAudio = null; }
+  if (canSpeak) speechSynthesis.cancel();
+  const a = new Audio("audio/examples/" + exampleName(text));
+  exAudio = a;
+  const fallback = () => { showVoiceNote(); speakSystem(text); };
+  a.onerror = fallback;
+  a.play().catch(fallback);
+}
+
 /* ================= 狀態與工具 ================= */
 const state = { grp: "all", sub: "all", kw: "", page: 1, size: 5 };
 const $ = id => document.getElementById(id);
@@ -374,7 +395,14 @@ function renderList() {
     row.append(word);
 
     const ex = el("div", "ex");
-    ex.append(el("span", "ev", w.ex.vi), el("span", "ez", w.ex.zh));
+    const evLine = el("div", "ev-line");
+    evLine.append(el("span", "ev", w.ex.vi));
+    const esp = el("button", "speak");
+    esp.setAttribute("aria-label", "播放例句發音");
+    esp.innerHTML = SPEAK_ICON;
+    esp.addEventListener("click", () => speakExample(w.ex.vi));
+    evLine.append(esp);
+    ex.append(evLine, el("span", "ez", w.ex.zh));
     row.append(ex);
 
     list.append(row);
