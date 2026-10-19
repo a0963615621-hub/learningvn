@@ -6,89 +6,122 @@
 <title>單字區｜越南語學習室</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Noto+Serif+TC:wght@500;700&family=Noto+Sans+TC:wght@400;500;700&family=Be+Vietnam+Pro:wght@400;500;600&display=swap" rel="stylesheet">
 <style>
 :root{
-  --green:#1F4A3D; --green-2:#2F6B58; --cream:#F6F2E8; --paper:#FBF8F1;
-  --ink:#1E2B26; --muted:#5B6B63; --gold:#D8A93A; --line:rgba(31,74,61,.14);
-  --sage:#DCE8DE; --peach:#F4E6D2; --mint:#D6E9E3;
+  --green:#1F4A3D; --green-2:#2F6B58; --cream:#F6F2E8; --paper:#FBF8F1; --card:#FFFDF8;
+  --ink:#1E2B26; --muted:#5B6B63; --gold:#D8A93A; --line:rgba(31,74,61,.13);
+  --tint:#EEF3EA;
   --serif:"Noto Serif TC",Georgia,serif; --sans:"Noto Sans TC","Be Vietnam Pro",system-ui,sans-serif;
   --viet:"Be Vietnam Pro","Noto Sans TC",system-ui,sans-serif;
 }
 *{box-sizing:border-box}
-body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.7;
-  padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+body{margin:0;background:var(--cream);color:var(--ink);font-family:var(--sans);line-height:1.6}
+button{font:inherit;color:inherit}
 a{color:inherit;text-decoration:none}
-button{font:inherit}
-a:focus-visible,button:focus-visible,input:focus-visible{outline:2px solid var(--gold);outline-offset:3px;border-radius:6px}
+button:focus-visible,a:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--gold);outline-offset:2px;border-radius:6px}
 
-/* 頂部導覽（與首頁一致） */
-.top{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;display:flex;align-items:center;justify-content:space-between;
-  gap:16px;padding:14px clamp(18px,4vw,56px);background:rgba(251,248,241,.92);backdrop-filter:blur(8px);
-  border-bottom:1px solid var(--line);flex-wrap:wrap}
-.brand{display:flex;align-items:center;gap:10px;min-width:0}
-.brand strong{display:block;font-family:var(--serif);font-size:1.15rem;color:var(--green);line-height:1.2}
-.brand small{display:block;font-size:.72rem;color:var(--muted);letter-spacing:.06em}
-nav.menu{display:flex;gap:6px;flex-wrap:wrap}
-nav.menu a{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:8px;font-size:.95rem;color:var(--ink);position:relative}
-nav.menu a svg{width:18px;height:18px;flex:none}
+/* 頂部導覽 */
+.top{position:sticky;top:0;z-index:20;display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap;
+  padding:12px clamp(16px,3vw,40px);background:rgba(251,248,241,.94);backdrop-filter:blur(8px);border-bottom:1px solid var(--line)}
+.brand{display:flex;align-items:center;gap:10px}
+.brand::before{content:"";flex:none;width:52px;height:42px;background:url("logo-cat.png") center/contain no-repeat;mix-blend-mode:multiply}
+.brand strong{display:block;font-family:var(--serif);font-size:1.12rem;color:var(--green);line-height:1.2}
+.brand small{display:block;font-size:.7rem;color:var(--muted);letter-spacing:.06em}
+nav.menu{display:flex;gap:4px;flex-wrap:wrap}
+nav.menu a{display:flex;align-items:center;gap:6px;padding:8px 12px;border-radius:8px;font-size:.95rem;position:relative}
+nav.menu a svg{width:18px;height:18px}
 nav.menu a:hover{background:rgba(31,74,61,.06)}
 nav.menu a[aria-current="page"]{color:var(--green);font-weight:500}
 nav.menu a[aria-current="page"]::after{content:"";position:absolute;left:12px;right:12px;bottom:-4px;height:2px;background:var(--green)}
 
-/* 頁首 */
-.wrap{max-width:1040px;margin:0 auto;padding:40px clamp(18px,4vw,40px) 64px}
-.page-head h1{font-family:var(--serif);font-size:clamp(1.9rem,4vw,2.6rem);color:var(--green);margin:0 0 8px;line-height:1.25}
-.page-head p{margin:0;color:var(--muted);max-width:60ch}
+/* 版面 */
+.app{display:grid;grid-template-columns:300px 1fr;min-height:calc(100vh - 70px)}
+.side{padding:20px 18px 40px;border-right:1px solid var(--line);background:rgba(246,242,232,.6)}
+.back{display:inline-flex;gap:6px;align-items:center;color:var(--ink);font-size:.95rem;padding:6px 4px;margin-bottom:12px}
+.back:hover{color:var(--green)}
+.all-btn{width:100%;display:flex;justify-content:space-between;align-items:center;background:none;border:0;padding:10px 12px;border-radius:10px;cursor:pointer;color:var(--ink);font-size:.95rem;margin-bottom:6px}
+.all-btn:hover{background:rgba(31,74,61,.05)}
+.all-btn[aria-current="true"]{background:var(--paper);box-shadow:0 1px 0 var(--line);color:var(--green);font-weight:500}
+.grp{width:100%;display:flex;align-items:center;gap:10px;padding:12px 12px;border-radius:12px;border:0;background:var(--tint);cursor:pointer;margin-top:8px;text-align:left}
+.grp.on{background:var(--green);color:var(--cream)}
+.grp .ic{width:30px;text-align:center;font-size:1.2rem}
+.grp .nm{flex:1;font-weight:500}
+.grp .ct{font-size:.85rem;opacity:.75}
+.subs{list-style:none;margin:6px 0 10px;padding:0 0 0 8px}
+.sub{width:100%;display:flex;justify-content:space-between;align-items:center;padding:9px 12px;border-radius:8px;border:0;background:none;cursor:pointer;font-size:.95rem;text-align:left;color:var(--ink)}
+.sub:hover{background:rgba(31,74,61,.06)}
+.sub[aria-current="true"]{background:var(--paper);box-shadow:0 1px 0 var(--line);color:var(--green);font-weight:500}
+.sub .ct{font-size:.85rem;color:var(--muted)}
 
-/* 篩選與搜尋 */
-.tools{display:flex;gap:14px;flex-wrap:wrap;align-items:center;justify-content:space-between;margin:30px 0 8px}
-.chips{display:flex;gap:8px;flex-wrap:wrap}
-.chip{border:1px solid var(--line);background:var(--paper);color:var(--muted);padding:7px 16px;border-radius:999px;cursor:pointer;font-size:.95rem;transition:background .2s,color .2s}
-.chip[aria-pressed="true"]{background:var(--green);border-color:var(--green);color:var(--cream)}
-.search{width:min(300px,100%);font:inherit;font-size:.98rem;padding:10px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
-.count{font-size:.9rem;color:var(--muted);margin:14px 0 18px}
+.main{padding:22px clamp(16px,3vw,40px) 40px;min-width:0}
+.crumbs{font-size:.9rem;color:var(--muted);display:flex;gap:6px;flex-wrap:wrap}
+.crumbs button{background:none;border:0;padding:0;cursor:pointer;color:var(--muted)}
+.crumbs button:hover{color:var(--green)}
 
-/* 單字卡片 */
-.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
-.card{border-radius:18px;padding:20px 20px 18px;box-shadow:0 10px 24px rgba(31,74,61,.06);display:flex;flex-direction:column;gap:6px}
-.card.greet{background:var(--sage)}.card.food{background:var(--peach)}.card.transport{background:var(--mint)}
-.card-head{display:flex;align-items:center;justify-content:space-between;gap:10px}
-.vi{font-family:var(--viet);font-size:1.4rem;font-weight:600;color:var(--green);line-height:1.3}
-.zh{font-size:1.02rem;color:var(--ink)}
-.speak{flex:none;width:38px;height:38px;border-radius:50%;border:0;background:var(--green);color:var(--cream);cursor:pointer;display:grid;place-items:center}
-.speak svg{width:18px;height:18px}
-.speak:hover{background:var(--green-2)}
-.speak[hidden]{display:none}
-.tag{align-self:flex-start;font-size:.78rem;color:var(--muted);background:rgba(255,255,255,.6);padding:2px 10px;border-radius:999px}
-.col{font-size:.92rem;color:var(--muted);margin:4px 0 0}
-.ex{margin:8px 0 0;padding-top:10px;border-top:1px solid rgba(31,74,61,.12);font-size:.95rem}
-.ex .ev{font-family:var(--viet);color:var(--ink)}
-.ex .ez{display:block;color:var(--muted);font-size:.9rem}
-.empty{color:var(--muted);padding:30px 0}
+/* 橫幅 */
+.banner{position:relative;overflow:hidden;border-radius:20px;margin:12px 0 22px;padding:28px 30px;min-height:170px;
+  background:linear-gradient(100deg,#F4EFE0 0%,#EADFC6 100%);display:flex;align-items:center}
+.banner h1{font-family:var(--serif);font-size:clamp(1.8rem,3.6vw,2.4rem);color:var(--green);margin:0;line-height:1.25;position:relative;z-index:2}
+.banner .vi-sub{display:block;font-size:.85rem;letter-spacing:.08em;color:var(--muted);margin:4px 0 8px;position:relative;z-index:2}
+.banner p{margin:0;color:var(--ink);max-width:44ch;position:relative;z-index:2}
+.banner .cat{position:absolute;right:-6px;bottom:-6px;height:150%;max-height:210px;width:auto;z-index:1}
 
-footer{border-top:1px solid var(--line);padding:24px clamp(18px,4vw,40px);text-align:center;color:var(--muted);font-size:.88rem}
-footer a{color:var(--green)}
+/* 搜尋 */
+.toolbar{display:flex;justify-content:flex-end;margin-bottom:12px}
+.search{width:min(320px,100%);font:inherit;font-size:.95rem;padding:9px 14px;border:1px solid var(--line);border-radius:12px;background:var(--paper);color:var(--ink)}
+#voiceNote{display:none;font-size:.9rem;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 14px}
 
-@media (max-width:640px){
-  .top{justify-content:center}
-  nav.menu{width:100%;justify-content:space-between}
-  nav.menu a{padding:6px 8px;font-size:.88rem}
+/* 單字列表 */
+.list{display:flex;flex-direction:column;gap:10px}
+.row{display:grid;grid-template-columns:36px 64px minmax(190px,1fr) minmax(220px,1.4fr);gap:16px;align-items:center;
+  background:var(--card);border:1px solid var(--line);border-radius:16px;padding:12px 16px;box-shadow:0 6px 16px rgba(31,74,61,.04)}
+.idx{color:var(--muted);font-size:.9rem;text-align:center}
+.thumb{width:64px;height:64px;border-radius:14px;background:var(--tint);display:grid;place-items:center;font-size:2rem}
+.vi-line{display:flex;align-items:center;gap:8px}
+.vi{font-family:var(--viet);font-size:1.3rem;font-weight:600;color:var(--green);line-height:1.25}
+.pos{font-size:.92rem;color:var(--muted);margin-top:2px}
+.ex{border-left:1px solid var(--line);padding-left:16px}
+.ex .ev{font-family:var(--viet);color:var(--ink);display:block}
+.ex .ez{font-size:.9rem;color:var(--muted);display:block}
+.speak{flex:none;width:32px;height:32px;border-radius:50%;border:0;background:var(--tint);color:var(--green);cursor:pointer;display:grid;place-items:center}
+.speak:hover{background:var(--green);color:var(--cream)}
+.speak svg{width:16px;height:16px}
+.empty{color:var(--muted);padding:30px 0;text-align:center}
+
+/* 分頁 */
+.pager{display:flex;align-items:center;justify-content:space-between;gap:14px;flex-wrap:wrap;margin-top:18px;font-size:.92rem;color:var(--muted)}
+.pages{display:flex;gap:6px;align-items:center}
+.pages button{min-width:38px;height:38px;border-radius:50%;border:1px solid var(--line);background:var(--paper);cursor:pointer;color:var(--ink)}
+.pages button[aria-current="true"]{background:var(--green);border-color:var(--green);color:var(--cream)}
+.pages button:disabled{opacity:.4;cursor:default}
+.pager select{font:inherit;padding:4px 8px;border-radius:8px;border:1px solid var(--line);background:var(--paper);color:var(--ink)}
+
+footer{padding:18px;text-align:center;color:var(--muted);font-size:.88rem;border-top:1px solid var(--line)}
+
+@media (max-width:900px){
+  .app{grid-template-columns:1fr}
+  .side{border-right:0;border-bottom:1px solid var(--line)}
+  .row{grid-template-columns:64px 1fr;grid-template-areas:"thumb word" "thumb ex"}
+  .idx{display:none}
+  .thumb{grid-area:thumb}
+  .row > div:nth-child(3){grid-area:word}
+  .row > div:nth-child(4){grid-area:ex;border-left:0;padding-left:0}
+  .banner .cat{opacity:.55}
 }
-/* 貓咪標誌：取代原本的蓮花圖示 */
-.brand > svg{display:none}
-.brand::before{content:"";flex:none;width:58px;height:46px;background:url("logo-cat.png") center/contain no-repeat;mix-blend-mode:multiply}
+@media (max-width:640px){
+  nav.menu{width:100%;justify-content:space-between}
+  nav.menu a{padding:6px 6px;font-size:.85rem}
+  nav.menu a svg{display:none}
+  .toolbar{justify-content:stretch}
+  .search{width:100%}
+}
 </style>
 </head>
 <body>
 
 <header class="top">
   <a class="brand" href="index.html" aria-label="越南語學習室首頁">
-    <svg width="38" height="38" viewBox="0 0 40 40" aria-hidden="true">
-      <path d="M20 4c-4 6-9 10-10 18 3 0 6 2 10 6 4-4 7-6 10-6-1-8-6-12-10-18z" fill="#D8A93A"/>
-      <path d="M20 14c-2 4-5 7-6 12 2 0 4 1 6 3 2-2 4-3 6-3-1-5-4-8-6-12z" fill="#1F4A3D"/>
-      <path d="M4 30c6-2 10 0 16 4 6-4 10-6 16-4-6 4-10 6-16 2-6 4-10 2-16-2z" fill="#2F6B58"/>
-    </svg>
     <span><strong>越南語學習室</strong><small>Học tiếng Việt</small></span>
   </a>
   <nav class="menu" aria-label="主選單">
@@ -107,93 +140,117 @@ footer a{color:var(--green)}
   </nav>
 </header>
 
-<main class="wrap">
-  <div class="page-head">
-    <h1>單字區</h1>
-    <p>從生活主題開始，每個單字都附上中文意思、常見搭配與例句。點擊喇叭可以聽發音。</p>
-  </div>
+<div class="app">
+  <aside class="side" aria-label="分類">
+    <a class="back" href="index.html">← 返回首頁</a>
+    <button class="all-btn" id="allBtn"><span>全部單字</span><span class="ct" id="allCount"></span></button>
+    <div id="groups"></div>
+  </aside>
 
-  <div class="tools">
-    <div class="chips" id="chips" role="group" aria-label="分類篩選"></div>
-    <input class="search" id="q" type="search" placeholder="搜尋越南文或中文" aria-label="搜尋單字">
-  </div>
-  <div class="count" id="count" aria-live="polite"></div>
-  <p id="voiceNote" style="display:none;font-size:.92rem;color:var(--muted);background:var(--paper);border:1px solid var(--line);border-radius:12px;padding:10px 14px;margin:0 0 16px"></p>
-  <div class="grid" id="grid"></div>
-</main>
+  <main class="main">
+    <nav class="crumbs" id="crumbs" aria-label="目前位置"></nav>
 
-<footer>
-  <a href="index.html">回到首頁</a>
-</footer>
+    <section class="banner">
+      <div>
+        <h1 id="title"></h1>
+        <span class="vi-sub" id="viSub"></span>
+        <p id="desc"></p>
+      </div>
+      <img class="cat" src="banner-cat.png" alt="" aria-hidden="true">
+    </section>
+
+    <div class="toolbar">
+      <input class="search" id="q" type="search" placeholder="搜尋單字（越南文或中文）" aria-label="搜尋單字">
+    </div>
+
+    <p id="voiceNote">這台裝置目前沒有越南語語音，部分發音可能不正確。請到系統設定安裝越南語語音後重新整理頁面。</p>
+
+    <div class="list" id="list"></div>
+
+    <div class="pager">
+      <label>每頁顯示
+        <select id="size" aria-label="每頁顯示幾個">
+          <option value="5">5</option>
+          <option value="10">10</option>
+          <option value="20">20</option>
+        </select> 個
+      </label>
+      <div class="pages" id="pages"></div>
+      <div id="total"></div>
+    </div>
+  </main>
+</div>
+
+<footer>單字資料與發音可在程式中自行增加。</footer>
 
 <script>
-/* ---------- 單字資料：新增單字只需在這裡加一筆 ---------- */
-const CATEGORIES = [
-  { id: "greet", name: "打招呼" },
-  { id: "food", name: "飲食" },
-  { id: "transport", name: "交通" }
+/* ================= 分類與單字資料 ================= */
+const GROUPS = [
+  { id: "greet", name: "打招呼與社交", icon: "👋", vi: "Chào hỏi & xã giao", desc: "初次見面、日常問候與禮貌用語，是開口說越南語的第一步。",
+    subs: [ { id: "basic", name: "基本問候", vi: "Lời chào" }, { id: "thanks", name: "感謝與道歉", vi: "Cảm ơn & xin lỗi" } ] },
+  { id: "food", name: "飲食與餐廳", icon: "🍜", vi: "Ăn uống", desc: "點餐、認識常見食物與口味，在越南吃飯時會用得上。",
+    subs: [ { id: "items", name: "食物名稱", vi: "Tên món ăn" }, { id: "drinks", name: "飲料", vi: "Đồ uống" }, { id: "taste", name: "口味", vi: "Vị" } ] },
+  { id: "transport", name: "交通與旅行", icon: "🚌", vi: "Giao thông", desc: "搭車、問路與看交通號誌，讓你在城市裡自在移動。",
+    subs: [ { id: "vehicle", name: "交通工具", vi: "Phương tiện" }, { id: "road", name: "道路與號誌", vi: "Đường & đèn" } ] }
 ];
 
 const WORDS = [
-  // 打招呼
-  { cat: "greet", vi: "xin chào", zh: "你好", note: "最通用的問候，可用於任何時間。", col: ["xin chào anh（對男性）", "xin chào chị（對年長女性）"], ex: { vi: "Xin chào, bạn khỏe không?", zh: "你好，你還好嗎？" } },
-  { cat: "greet", vi: "cảm ơn", zh: "謝謝", note: "日常最常用的感謝說法。", col: ["cảm ơn bạn", "cảm ơn rất nhiều"], ex: { vi: "Cảm ơn bạn đã giúp tôi.", zh: "謝謝你幫我。" } },
-  { cat: "greet", vi: "không có gì", zh: "不客氣", note: "回應「謝謝」時使用。", col: ["không có gì đâu"], ex: { vi: "Cảm ơn bạn! — Không có gì.", zh: "謝謝你！——不客氣。" } },
-  { cat: "greet", vi: "xin lỗi", zh: "對不起、抱歉", note: "道歉或請求對方注意時使用。", col: ["xin lỗi bạn", "xin lỗi vì…"], ex: { vi: "Xin lỗi, tôi đến muộn.", zh: "對不起，我來晚了。" } },
-  { cat: "greet", vi: "làm ơn", zh: "請、麻煩你", note: "在請求別人幫忙時放在句首或句尾。", col: ["làm ơn giúp tôi"], ex: { vi: "Làm ơn cho tôi một ly nước.", zh: "麻煩給我一杯水。" } },
-  { cat: "greet", vi: "chào buổi sáng", zh: "早安", note: "buổi sáng 指早上；下午用 chào buổi chiều。", col: ["chào buổi tối（晚安／晚上好）"], ex: { vi: "Chào buổi sáng, anh khỏe không?", zh: "早安，你好嗎？" } },
-  { cat: "greet", vi: "rất vui được gặp bạn", zh: "很高興認識你", note: "初次見面時的常用句。", col: ["rất vui được làm quen"], ex: { vi: "Rất vui được gặp bạn.", zh: "很高興認識你。" } },
-  { cat: "greet", vi: "hẹn gặp lại", zh: "再見、回頭見", note: "字面意思是「約定再見」，語氣比 tạm biệt 親切。", col: ["hẹn gặp lại sau"], ex: { vi: "Hẹn gặp lại bạn vào tuần sau.", zh: "下週見。" } },
-  { cat: "greet", vi: "tạm biệt", zh: "再見", note: "比較中性的告別用語。", col: ["nói tạm biệt"], ex: { vi: "Tạm biệt, hẹn gặp lại!", zh: "再見，下次見！" } },
+  // 打招呼 / 基本問候
+  { g: "greet", s: "basic", icon: "👋", vi: "xin chào", zh: "你好", pos: "(int)", ex: { vi: "Xin chào, bạn khỏe không?", zh: "你好，你還好嗎？" } },
+  { g: "greet", s: "basic", icon: "🌅", vi: "chào buổi sáng", zh: "早安", pos: "(int)", ex: { vi: "Chào buổi sáng, anh khỏe không?", zh: "早安，你好嗎？" } },
+  { g: "greet", s: "basic", icon: "🤝", vi: "rất vui được gặp bạn", zh: "很高興認識你", pos: "(phr)", ex: { vi: "Rất vui được gặp bạn.", zh: "很高興認識你。" } },
+  { g: "greet", s: "basic", icon: "👋", vi: "hẹn gặp lại", zh: "再見、回頭見", pos: "(phr)", ex: { vi: "Hẹn gặp lại bạn vào tuần sau.", zh: "下週見。" } },
+  { g: "greet", s: "basic", icon: "🚪", vi: "tạm biệt", zh: "再見", pos: "(int)", ex: { vi: "Tạm biệt, hẹn gặp lại!", zh: "再見，下次見！" } },
+  // 打招呼 / 感謝與道歉
+  { g: "greet", s: "thanks", icon: "🙏", vi: "cảm ơn", zh: "謝謝", pos: "(v)", ex: { vi: "Cảm ơn bạn đã giúp tôi.", zh: "謝謝你幫我。" } },
+  { g: "greet", s: "thanks", icon: "🙂", vi: "không có gì", zh: "不客氣", pos: "(phr)", ex: { vi: "Cảm ơn bạn! — Không có gì.", zh: "謝謝你！——不客氣。" } },
+  { g: "greet", s: "thanks", icon: "🙇", vi: "xin lỗi", zh: "對不起、抱歉", pos: "(v)", ex: { vi: "Xin lỗi, tôi đến muộn.", zh: "對不起，我來晚了。" } },
+  { g: "greet", s: "thanks", icon: "🫶", vi: "làm ơn", zh: "請、麻煩你", pos: "(v)", ex: { vi: "Làm ơn cho tôi một ly nước.", zh: "麻煩給我一杯水。" } },
 
-  // 飲食
-  { cat: "food", vi: "cơm", zh: "飯", note: "越南人的主食。cơm trắng 指白飯。", col: ["cơm trắng（白飯）", "ăn cơm（吃飯）"], ex: { vi: "Tôi ăn cơm mỗi ngày.", zh: "我每天吃飯。" } },
-  { cat: "food", vi: "phở", zh: "河粉", note: "越南的代表性湯麵，常見於早餐。", col: ["phở bò（牛肉河粉）", "phở gà（雞肉河粉）"], ex: { vi: "Sáng nay tôi ăn phở.", zh: "我今天早上吃了河粉。" } },
-  { cat: "food", vi: "bánh mì", zh: "越式法國麵包", note: "外皮酥脆的麵包，可夾各種餡料。", col: ["bánh mì thịt（肉鬆麵包）"], ex: { vi: "Bánh mì này rất ngon.", zh: "這個法國麵包很好吃。" } },
-  { cat: "food", vi: "cà phê sữa đá", zh: "越式冰奶咖啡", note: "sữa 是牛奶，đá 是冰塊。", col: ["cà phê đen（黑咖啡）"], ex: { vi: "Cho tôi một ly cà phê sữa đá.", zh: "請給我一杯冰奶咖啡。" } },
-  { cat: "food", vi: "thịt", zh: "肉", note: "需搭配種類使用，例如 thịt bò 牛肉。", col: ["thịt bò（牛肉）", "thịt heo／thịt lợn（豬肉）", "thịt gà（雞肉）"], ex: { vi: "Tôi không ăn thịt bò.", zh: "我不吃牛肉。" } },
-  { cat: "food", vi: "cá", zh: "魚", note: "泛指魚類。", col: ["cá kho（燉魚）"], ex: { vi: "Cá này tươi quá.", zh: "這魚好新鮮。" } },
-  { cat: "food", vi: "rau", zh: "蔬菜", note: "越南料理常搭配大量生菜與香草。", col: ["rau sống（生菜）"], ex: { vi: "Ăn nhiều rau rất tốt.", zh: "多吃蔬菜很好。" } },
-  { cat: "food", vi: "trái cây", zh: "水果", note: "trái 是果實，cây 是樹。", col: ["ăn trái cây（吃水果）"], ex: { vi: "Tôi thích trái cây nhiệt đới.", zh: "我喜歡熱帶水果。" } },
-  { cat: "food", vi: "ngon", zh: "好吃", note: "形容詞，用來評價食物。", col: ["ngon quá（好好吃）", "rất ngon（很好吃）"], ex: { vi: "Món này ngon quá!", zh: "這道菜好好吃！" } },
-  { cat: "food", vi: "cay", zh: "辣", note: "形容詞。注意：越南語的「辣」和「苦」不同。", col: ["không cay（不辣）", "cay quá（好辣）"], ex: { vi: "Đồ ăn này hơi cay.", zh: "這道菜有點辣。" } },
+  // 飲食 / 食物名稱
+  { g: "food", s: "items", icon: "🍚", vi: "cơm", zh: "飯、米飯", pos: "(n)", ex: { vi: "Tôi ăn cơm mỗi ngày.", zh: "我每天都吃飯。" } },
+  { g: "food", s: "items", icon: "🍜", vi: "phở", zh: "河粉", pos: "(n)", ex: { vi: "Sáng nay tôi ăn phở.", zh: "我今天早上吃了河粉。" } },
+  { g: "food", s: "items", icon: "🥖", vi: "bánh mì", zh: "越式法國麵包", pos: "(n)", ex: { vi: "Bánh mì này rất ngon.", zh: "這個法國麵包很好吃。" } },
+  { g: "food", s: "items", icon: "🥩", vi: "thịt", zh: "肉", pos: "(n)", ex: { vi: "Tôi không ăn thịt bò.", zh: "我不吃牛肉。" } },
+  { g: "food", s: "items", icon: "🐟", vi: "cá", zh: "魚", pos: "(n)", ex: { vi: "Cá này tươi quá.", zh: "這魚好新鮮。" } },
+  { g: "food", s: "items", icon: "🥬", vi: "rau", zh: "蔬菜", pos: "(n)", ex: { vi: "Ăn nhiều rau rất tốt.", zh: "多吃蔬菜很好。" } },
+  { g: "food", s: "items", icon: "🍎", vi: "trái cây", zh: "水果", pos: "(n)", ex: { vi: "Tôi thích trái cây nhiệt đới.", zh: "我喜歡熱帶水果。" } },
+  // 飲食 / 飲料
+  { g: "food", s: "drinks", icon: "☕", vi: "cà phê sữa đá", zh: "越式冰奶咖啡", pos: "(n)", ex: { vi: "Cho tôi một ly cà phê sữa đá.", zh: "請給我一杯冰奶咖啡。" } },
+  // 飲食 / 口味
+  { g: "food", s: "taste", icon: "😋", vi: "ngon", zh: "好吃", pos: "(adj)", ex: { vi: "Món này ngon quá!", zh: "這道菜好好吃！" } },
+  { g: "food", s: "taste", icon: "🌶️", vi: "cay", zh: "辣", pos: "(adj)", ex: { vi: "Đồ ăn này hơi cay.", zh: "這道菜有點辣。" } },
 
-  // 交通
-  { cat: "transport", vi: "xe buýt", zh: "公車", note: "城市裡常見的大眾運輸。", col: ["bắt xe buýt（搭公車）", "trạm xe buýt（公車站）"], ex: { vi: "Tôi đi làm bằng xe buýt.", zh: "我搭公車上班。" } },
-  { cat: "transport", vi: "xe máy", zh: "機車、摩托車", note: "越南最普遍的交通工具。", col: ["đi xe máy（騎機車）"], ex: { vi: "Ở đây ai cũng đi xe máy.", zh: "這裡每個人都騎機車。" } },
-  { cat: "transport", vi: "xe đạp", zh: "腳踏車", note: "動詞用 đạp xe（騎腳踏車）。", col: ["đi xe đạp（騎腳踏車）"], ex: { vi: "Tôi thích đi xe đạp buổi sáng.", zh: "我喜歡早上騎腳踏車。" } },
-  { cat: "transport", vi: "tàu hỏa", zh: "火車", note: "長途移動常用。", col: ["ga tàu hỏa（火車站）", "vé tàu（火車票）"], ex: { vi: "Tàu hỏa đến lúc mấy giờ?", zh: "火車幾點到？" } },
-  { cat: "transport", vi: "máy bay", zh: "飛機", note: "sân bay 是機場。", col: ["đi máy bay（搭飛機）", "sân bay（機場）"], ex: { vi: "Chuyến máy bay này bay đi đâu?", zh: "這班飛機飛去哪裡？" } },
-  { cat: "transport", vi: "bến xe", zh: "客運站、車站", note: "長途客運的停靠地點。", col: ["bến xe buýt（公車總站）"], ex: { vi: "Bến xe ở đâu?", zh: "客運站在哪裡？" } },
-  { cat: "transport", vi: "đường", zh: "路、街道", note: "泛指道路；具體的街名前會加 đường。", col: ["đường lớn（大馬路）", "qua đường（過馬路）"], ex: { vi: "Đường này đi đâu?", zh: "這條路通往哪裡？" } },
-  { cat: "transport", vi: "đèn đỏ", zh: "紅燈", note: "đèn 是燈，đỏ 是紅色。", col: ["đèn xanh（綠燈）", "đèn vàng（黃燈）"], ex: { vi: "Đèn đỏ rồi, dừng lại đi.", zh: "紅燈了，停下來。" } },
-  { cat: "transport", vi: "vé", zh: "票", note: "買票用 mua vé。", col: ["mua vé（買票）", "giá vé（票價）"], ex: { vi: "Tôi muốn mua một vé.", zh: "我想買一張票。" } },
-  { cat: "transport", vi: "đi bộ", zh: "步行", note: "動詞短語，字面是「走路」。", col: ["đi bộ đến trường（走路去學校）"], ex: { vi: "Tôi thích đi bộ trong công viên.", zh: "我喜歡在公園散步。" } }
+  // 交通 / 交通工具
+  { g: "transport", s: "vehicle", icon: "🚌", vi: "xe buýt", zh: "公車", pos: "(n)", ex: { vi: "Tôi đi làm bằng xe buýt.", zh: "我搭公車上班。" } },
+  { g: "transport", s: "vehicle", icon: "🛵", vi: "xe máy", zh: "機車、摩托車", pos: "(n)", ex: { vi: "Ở đây ai cũng đi xe máy.", zh: "這裡每個人都騎機車。" } },
+  { g: "transport", s: "vehicle", icon: "🚲", vi: "xe đạp", zh: "腳踏車", pos: "(n)", ex: { vi: "Tôi thích đi xe đạp buổi sáng.", zh: "我喜歡早上騎腳踏車。" } },
+  { g: "transport", s: "vehicle", icon: "🚆", vi: "tàu hỏa", zh: "火車", pos: "(n)", ex: { vi: "Tàu hỏa đến lúc mấy giờ?", zh: "火車幾點到？" } },
+  { g: "transport", s: "vehicle", icon: "✈️", vi: "máy bay", zh: "飛機", pos: "(n)", ex: { vi: "Chuyến máy bay này bay đi đâu?", zh: "這班飛機飛去哪裡？" } },
+  { g: "transport", s: "vehicle", icon: "🎫", vi: "vé", zh: "票", pos: "(n)", ex: { vi: "Tôi muốn mua một vé.", zh: "我想買一張票。" } },
+  // 交通 / 道路與號誌
+  { g: "transport", s: "road", icon: "🚉", vi: "bến xe", zh: "客運站、車站", pos: "(n)", ex: { vi: "Bến xe ở đâu?", zh: "客運站在哪裡？" } },
+  { g: "transport", s: "road", icon: "🛣️", vi: "đường", zh: "路、街道", pos: "(n)", ex: { vi: "Đường này đi đâu?", zh: "這條路通往哪裡？" } },
+  { g: "transport", s: "road", icon: "🚦", vi: "đèn đỏ", zh: "紅燈", pos: "(n)", ex: { vi: "Đèn đỏ rồi, dừng lại đi.", zh: "紅燈了，停下來。" } },
+  { g: "transport", s: "road", icon: "🚶", vi: "đi bộ", zh: "步行", pos: "(v)", ex: { vi: "Tôi thích đi bộ trong công viên.", zh: "我喜歡在公園散步。" } }
 ];
 
-/* ---------- 發音（瀏覽器支援時才顯示按鈕） ---------- */
+/* ================= 發音 ================= */
 const canSpeak = "speechSynthesis" in window;
 let viVoice = null;
 function pickVoice() {
+  if (!canSpeak) return;
   const voices = speechSynthesis.getVoices();
   if (!voices.length) return;
   viVoice = voices.find(v => /^vi[-_]/i.test(v.lang)) || voices.find(v => /viet/i.test(v.name)) || null;
-  const note = document.getElementById("voiceNote");
-  if (note) {
-    note.style.display = viVoice ? "none" : "block";
-    note.textContent = "這台裝置目前沒有越南語語音，發音可能不正確。請到系統設定安裝越南語語音，安裝後重新整理頁面。（Windows：設定 → 時間與語言 → 語音；Mac：系統設定 → 輔助使用 → 語音內容 → 管理語音）";
-  }
 }
-if (canSpeak) {
-  pickVoice();
-  speechSynthesis.onvoiceschanged = pickVoice;
-}
-// 音檔檔名：去掉聲調符號後以連字號連接，例如 xin chào → audio/xin-chao.mp3
+if (canSpeak) { pickVoice(); speechSynthesis.onvoiceschanged = pickVoice; }
 function audioName(text) {
   return text.normalize("NFD").replace(/[\u0300-\u036f]/g, "")
     .replace(/đ/g, "d").replace(/Đ/g, "D")
     .toLowerCase().trim().replace(/\s+/g, "-") + ".mp3";
 }
+function showVoiceNote() { const n = document.getElementById("voiceNote"); if (n && !viVoice) n.style.display = "block"; }
 function speakSystem(text) {
   if (!canSpeak) return;
   speechSynthesis.cancel();
@@ -209,94 +266,153 @@ function speak(text) {
   if (canSpeak) speechSynthesis.cancel();
   const a = new Audio("audio/" + audioName(text));
   currentAudio = a;
-  a.onerror = () => speakSystem(text);
-  a.play().catch(() => speakSystem(text));
+  const fallback = () => { showVoiceNote(); speakSystem(text); };
+  a.onerror = fallback;
+  a.play().catch(fallback);
 }
 
-/* ---------- 篩選與渲染 ---------- */
-let activeCat = "all";
-let keyword = "";
-const chipsEl = document.getElementById("chips");
-const gridEl = document.getElementById("grid");
-const countEl = document.getElementById("count");
-const qEl = document.getElementById("q");
+/* ================= 狀態與工具 ================= */
+const state = { grp: "all", sub: "all", kw: "", page: 1, size: 5 };
+const $ = id => document.getElementById(id);
+const el = (tag, cls, text) => { const e = document.createElement(tag); if (cls) e.className = cls; if (text !== undefined) e.textContent = text; return e; };
+const findGroup = id => GROUPS.find(g => g.id === id);
+const findSub = (gid, sid) => { const g = findGroup(gid); return g && g.subs.find(s => s.id === sid); };
 
-const catName = id => (CATEGORIES.find(c => c.id === id) || {}).name || "";
+function scopeWords() {
+  return WORDS.filter(w => (state.grp === "all" || w.g === state.grp) && (state.sub === "all" || w.s === state.sub));
+}
+function visibleWords() {
+  const kw = state.kw.trim().toLowerCase();
+  return scopeWords().filter(w => !kw || (w.vi + " " + w.zh + " " + w.ex.vi + " " + w.ex.zh).toLowerCase().includes(kw));
+}
 
-function renderChips() {
-  chipsEl.innerHTML = "";
-  [{ id: "all", name: "全部" }, ...CATEGORIES].forEach(c => {
-    const b = document.createElement("button");
-    b.className = "chip";
-    b.textContent = c.name;
-    b.setAttribute("aria-pressed", String(activeCat === c.id));
-    b.addEventListener("click", () => { activeCat = c.id; renderChips(); renderGrid(); });
-    chipsEl.append(b);
+/* ================= 渲染：側欄 ================= */
+function navTo(grp, sub) {
+  state.grp = grp; state.sub = sub; state.page = 1;
+  renderAll();
+}
+function renderSide() {
+  $("allCount").textContent = WORDS.length;
+  const allBtn = $("allBtn");
+  allBtn.setAttribute("aria-current", String(state.grp === "all"));
+  allBtn.onclick = () => navTo("all", "all");
+  const box = $("groups"); box.innerHTML = "";
+  GROUPS.forEach(g => {
+    const on = state.grp === g.id;
+    const btn = el("button", "grp" + (on ? " on" : ""));
+    btn.setAttribute("aria-expanded", String(on));
+    btn.append(el("span", "ic", g.icon), el("span", "nm", g.name), el("span", "ct", String(WORDS.filter(w => w.g === g.id).length)));
+    btn.addEventListener("click", () => navTo(g.id, "all"));
+    box.append(btn);
+    if (on) {
+      const ul = el("ul", "subs");
+      g.subs.forEach(s => {
+        const li = el("li");
+        const sb = el("button", "sub");
+        sb.setAttribute("aria-current", String(state.sub === s.id));
+        sb.append(el("span", null, s.name), el("span", "ct", String(WORDS.filter(w => w.s === s.id).length)));
+        sb.addEventListener("click", () => navTo(g.id, s.id));
+        li.append(sb);
+        ul.append(li);
+      });
+      box.append(ul);
+    }
   });
 }
 
-function renderGrid() {
-  const kw = keyword.trim().toLowerCase();
-  const list = WORDS.filter(w =>
-    (activeCat === "all" || w.cat === activeCat) &&
-    (!kw || (w.vi + " " + w.zh + " " + w.note).toLowerCase().includes(kw))
-  );
-  gridEl.innerHTML = "";
-  countEl.textContent = `共 ${list.length} 個單字`;
-  if (!list.length) {
-    const p = document.createElement("p");
-    p.className = "empty";
-    p.textContent = "找不到符合的單字，換個關鍵字試試。";
-    gridEl.append(p);
-    return;
+/* ================= 渲染：標題與麵包屑 ================= */
+function renderHead() {
+  const crumbs = $("crumbs"); crumbs.innerHTML = "";
+  const home = el("button", null, "單字區");
+  home.addEventListener("click", () => navTo("all", "all"));
+  crumbs.append(home);
+  let title = "全部單字", viSub = "Tất cả từ vựng", desc = "所有分類的單字，依生活主題慢慢累積。";
+  if (state.grp !== "all") {
+    const g = findGroup(state.grp);
+    const gb = el("button", null, g.name);
+    gb.addEventListener("click", () => navTo(g.id, "all"));
+    crumbs.append(el("span", null, "›"), gb);
+    title = g.name; viSub = g.vi; desc = g.desc;
+    if (state.sub !== "all") {
+      const s = findSub(g.id, state.sub);
+      crumbs.append(el("span", null, "›"), el("span", null, s.name));
+      title = s.name; viSub = s.vi;
+    }
   }
-  list.forEach(w => {
-    const card = document.createElement("article");
-    card.className = "card " + w.cat;
-
-    const head = document.createElement("div");
-    head.className = "card-head";
-    const titles = document.createElement("div");
-    const vi = document.createElement("div"); vi.className = "vi"; vi.textContent = w.vi;
-    const zh = document.createElement("div"); zh.className = "zh"; zh.textContent = w.zh;
-    titles.append(vi, zh);
-    head.append(titles);
-
-    {
-      const sp = document.createElement("button");
-      sp.className = "speak";
-      sp.setAttribute("aria-label", "播放發音：" + w.vi);
-      sp.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>';
-      sp.addEventListener("click", () => speak(w.vi));
-      head.append(sp);
-    }
-    card.append(head);
-
-    const tag = document.createElement("span"); tag.className = "tag"; tag.textContent = catName(w.cat);
-    card.append(tag);
-
-    const note = document.createElement("p"); note.className = "col"; note.textContent = w.note;
-    card.append(note);
-
-    if (w.col && w.col.length) {
-      const col = document.createElement("p"); col.className = "col";
-      col.textContent = "常見搭配：" + w.col.join("、");
-      card.append(col);
-    }
-
-    const ex = document.createElement("div"); ex.className = "ex";
-    const ev = document.createElement("span"); ev.className = "ev"; ev.textContent = w.ex.vi;
-    const ez = document.createElement("span"); ez.className = "ez"; ez.textContent = w.ex.zh;
-    ex.append(ev, ez);
-    card.append(ex);
-
-    gridEl.append(card);
-  });
+  $("title").textContent = title;
+  $("viSub").textContent = viSub;
+  $("desc").textContent = desc;
 }
 
-qEl.addEventListener("input", () => { keyword = qEl.value; renderGrid(); });
-renderChips();
-renderGrid();
+/* ================= 渲染：單字列表 ================= */
+const SPEAK_ICON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M4 9h4l5-4v14l-5-4H4z" fill="currentColor"/><path d="M16 8.5a5 5 0 0 1 0 7M18.5 6a8.5 8.5 0 0 1 0 12"/></svg>';
+
+function renderList() {
+  const all = visibleWords();
+  const pages = Math.max(1, Math.ceil(all.length / state.size));
+  if (state.page > pages) state.page = pages;
+  const start = (state.page - 1) * state.size;
+  const slice = all.slice(start, start + state.size);
+
+  const list = $("list"); list.innerHTML = "";
+  if (!slice.length) list.append(el("p", "empty", "找不到符合的單字，換個關鍵字試試。"));
+
+  slice.forEach((w, i) => {
+    const row = el("div", "row");
+    row.append(el("div", "idx", String(start + i + 1).padStart(2, "0")));
+    row.append(el("div", "thumb", w.icon));
+
+    const word = el("div", "word");
+    const line = el("div", "vi-line");
+    line.append(el("span", "vi", w.vi));
+    const sp = el("button", "speak");
+    sp.setAttribute("aria-label", "播放發音：" + w.vi);
+    sp.innerHTML = SPEAK_ICON;
+    sp.addEventListener("click", () => speak(w.vi));
+    line.append(sp);
+    word.append(line, el("div", "pos", `${w.pos} ${w.zh}`));
+    row.append(word);
+
+    const ex = el("div", "ex");
+    ex.append(el("span", "ev", w.ex.vi), el("span", "ez", w.ex.zh));
+    row.append(ex);
+
+    list.append(row);
+  });
+
+  $("total").textContent = `共 ${all.length} 個單字`;
+  renderPager(pages);
+}
+
+/* ================= 渲染：分頁 ================= */
+function renderPager(pages) {
+  const box = $("pages"); box.innerHTML = "";
+  const prev = el("button", null, "‹");
+  prev.disabled = state.page <= 1;
+  prev.addEventListener("click", () => { state.page--; renderAll(); });
+  box.append(prev);
+  for (let p = 1; p <= pages; p++) {
+    const b = el("button", null, String(p));
+    b.setAttribute("aria-current", String(p === state.page));
+    b.addEventListener("click", () => { state.page = p; renderAll(); });
+    box.append(b);
+  }
+  const next = el("button", null, "›");
+  next.disabled = state.page >= pages;
+  next.addEventListener("click", () => { state.page++; renderAll(); });
+  box.append(next);
+}
+
+function renderAll() {
+  renderSide();
+  renderHead();
+  renderList();
+}
+
+/* ================= 事件 ================= */
+$("q").addEventListener("input", e => { state.kw = e.target.value; state.page = 1; renderList(); });
+$("size").addEventListener("change", e => { state.size = Number(e.target.value); state.page = 1; renderList(); });
+renderAll();
 </script>
 </body>
 </html>
