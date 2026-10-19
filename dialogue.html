@@ -83,6 +83,7 @@ nav.menu a[aria-current="page"]::after{content:"";position:absolute;left:12px;ri
 .opts{display:flex;flex-direction:column;gap:8px}
 .opt{display:flex;align-items:center;justify-content:space-between;gap:10px;text-align:left;padding:12px 16px;border-radius:14px;border:1px solid var(--line);background:var(--card);cursor:pointer;font-family:var(--viet);font-size:1rem}
 .opt:hover{border-color:var(--green-2)}
+.opt:focus-visible{outline:2px solid var(--gold);outline-offset:2px}
 .opt.wrong{border-color:var(--bad);background:#F8E9E5;cursor:default}
 .opt.wrong:hover{border-color:var(--bad)}
 .opt .speak{margin-left:0}
@@ -252,7 +253,7 @@ function speakBtn(text) {
   const b = el("button", "speak");
   b.setAttribute("aria-label", "播放發音");
   b.innerHTML = SPEAK_ICON;
-  b.addEventListener("click", () => speak(text));
+  b.addEventListener("click", e => { e.stopPropagation(); speak(text); });
   return b;
 }
 
@@ -384,7 +385,9 @@ function renderOptions(step) {
   let attempts = 0;
 
   shuffle(step.opts).forEach(opt => {
-    const row = el("button", "opt");
+    const row = el("div", "opt");
+    row.setAttribute("role", "button");
+    row.tabIndex = 0;
     row.append(el("span", null, opt.vi), speakBtn(opt.vi));
     row.addEventListener("click", () => {
       if (row.classList.contains("wrong")) return;
