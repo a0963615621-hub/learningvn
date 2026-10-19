@@ -383,6 +383,7 @@ function renderOptions(step) {
   const list = el("div", "opts");
   const feedback = el("p", "feedback");
   let attempts = 0;
+  let answered = false;
 
   shuffle(step.opts).forEach(opt => {
     const row = el("div", "opt");
@@ -390,8 +391,9 @@ function renderOptions(step) {
     row.tabIndex = 0;
     row.append(el("span", null, opt.vi), speakBtn(opt.vi));
     row.addEventListener("click", () => {
-      if (row.classList.contains("wrong")) return;
+      if (answered || row.classList.contains("wrong")) return;
       if (opt.ok) {
+        answered = true;
         if (attempts === 0) run.score++;
         feedback.className = "feedback good";
         feedback.textContent = opt.why;
