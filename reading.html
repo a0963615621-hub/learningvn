@@ -156,9 +156,9 @@ const ARTICLES = [
       "我非常愛我的家人。"
     ],
     quiz: [
-      { q: "「Tôi là sinh viên」是什麼意思？", opts: ["我是學生", "我是老師", "我是醫生"], ans: 0, why: "sinh viên 是學生，tôi 是我。" },
-      { q: "明的家裡有幾個人？", opts: ["三個", "四個", "五個"], ans: 1, why: "原文說 gia đình tôi có bốn người。" },
-      { q: "媽媽是做什麼的？", opts: ["醫生", "老師", "學生"], ans: 1, why: "原文說 Mẹ tôi là giáo viên，giáo viên 是老師。" }
+      { q: "Minh làm nghề gì?", opts: ["Minh là giáo viên.", "Minh là sinh viên.", "Minh là bác sĩ."], ans: 1, why: "Câu đầu tiên viết: Tôi là sinh viên." },
+      { q: "Gia đình Minh có mấy người?", opts: ["Ba người.", "Bốn người.", "Năm người."], ans: 1, why: "Câu thứ hai viết: Gia đình tôi có bốn người." },
+      { q: "Mẹ của Minh làm nghề gì?", opts: ["Mẹ là bác sĩ.", "Mẹ là giáo viên.", "Mẹ là sinh viên."], ans: 1, why: "Câu thứ hai viết: Mẹ tôi là giáo viên." }
     ]
   },
   {
@@ -176,10 +176,10 @@ const ARTICLES = [
       "也許未來，三角洲的交通會同時結合水路與陸路。重要的是，發展的方式要能保留這片土地獨特的水鄉文化。"
     ],
     quiz: [
-      { q: "根據文章，當地居民過去主要用什麼方式在河道上移動？", opts: ["火車", "小船（xuồng 與 ghe）", "飛機"], ans: 1, why: "第一段提到人們在小河道上搭乘 xuồng 或 ghe。" },
-      { q: "文章說，新建的橋樑帶來什麼好處？", opts: ["學生上學更快，農產品更容易運出", "交通費用變得更貴", "河道不再有船隻"], ans: 0, why: "原文指出學生能更快到校，農民也更容易把農產品運到市場。" },
-      { q: "文章提到車輛增加造成什麼問題？", opts: ["空氣變得更乾淨", "尖峰時段塞車更常見", "停車場越來越多"], ans: 1, why: "摩托車與貨車增加，使 kẹt xe 在 giờ cao điểm 更普遍。" },
-      { q: "在芹苴工作的那位上班族為什麼常搭公車？", opts: ["公車比較漂亮", "省油錢，也不用找停車位", "公司規定必須搭公車"], ans: 1, why: "他說搭公車可以省油錢，也不必擔心找停車位。" }
+      { q: "Theo bài đọc, người dân trước đây đi lại trên sông bằng phương tiện nào?", opts: ["Tàu hỏa.", "Xuồng và ghe.", "Máy bay."], ans: 1, why: "Đoạn đầu viết: người ta đi bằng xuồng hoặc ghe trên các con kênh nhỏ." },
+      { q: "Những cây cầu mới mang lại lợi ích gì?", opts: ["Học sinh đến trường nhanh hơn và nông sản dễ đưa ra chợ hơn.", "Chi phí đi lại đắt hơn.", "Không còn thuyền trên sông."], ans: 0, why: "Nhờ vậy, học sinh có thể đến trường nhanh hơn, và nông dân mang nông sản ra chợ dễ dàng hơn." },
+      { q: "Bài đọc nói việc tăng xe máy và xe tải gây ra vấn đề gì?", opts: ["Không khí trong lành hơn.", "Kẹt xe vào giờ cao điểm thường xuyên hơn.", "Bãi đỗ xe ngày càng nhiều."], ans: 1, why: "Lượng xe máy và xe tải tăng lên, nên tình trạng kẹt xe vào giờ cao điểm trở nên phổ biến hơn." },
+      { q: "Vì sao người đi làm ở Cần Thơ thường đi xe buýt?", opts: ["Xe buýt đẹp hơn.", "Tiết kiệm tiền xăng và không phải lo tìm chỗ đỗ xe.", "Công ty bắt buộc đi xe buýt."], ans: 1, why: "Anh ấy thường đi xe buýt vì tiết kiệm được tiền xăng và không phải lo tìm chỗ đỗ xe." }
     ]
   }
 ];
@@ -252,7 +252,7 @@ function showLevel(code) {
 /* ================= 頁面三：文章內頁 ================= */
 function buildQuiz(article) {
   const wrap = el("section", "quiz");
-  wrap.append(el("h2", null, "閱讀練習"));
+  wrap.append(el("h2", null, "Bài tập đọc hiểu"));
   const items = article.quiz.map((item, i) => {
     const qi = el("div", "qi");
     qi.append(el("p", null, `${i + 1}. ${item.q}`));
@@ -271,7 +271,7 @@ function buildQuiz(article) {
     return { item, labels, why, name };
   });
   const score = el("p", "score");
-  const btn = el("button", "check", "檢查答案");
+  const btn = el("button", "check", "Kiểm tra");
   btn.addEventListener("click", () => {
     let correct = 0;
     items.forEach(({ item, labels, why, name }) => {
@@ -284,7 +284,7 @@ function buildQuiz(article) {
       if (picked && Number(picked.value) === item.ans) correct++;
       why.hidden = false;
     });
-    score.textContent = `答對 ${correct} / ${items.length} 題`;
+    score.textContent = `Đúng ${correct} / ${items.length} câu`;
   });
   wrap.append(btn, score);
   return wrap;
