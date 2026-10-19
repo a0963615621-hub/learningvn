@@ -356,20 +356,67 @@ function show() {
 }
 show();
 if (!matchMedia('(prefers-reduced-motion: reduce)').matches) setInterval(show, 3600);
-/* 風景輪播：每 5 秒換一張，可按圓點切換 */
+/* 風景輪播：自動讀取 GitHub 上 scenes 資料夾的照片，每 5 秒換一張 */
 const SLIDE_MS = 5000;
-const slides = document.querySelectorAll('.slide');
-const dotBtns = document.querySelectorAll('.dots button');
-let s = 0;
+const REPO_API = 'https://api.github.com/repos/a0963615621-hub/learningvn/contents/scenes';
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+let slides = [], dotBtns = [], s = 0, timer = null;
+
 function goTo(n) {
+  if (!slides.length) return;
   s = (n + slides.length) % slides.length;
   slides.forEach((el, k) => el.classList.toggle('on', k === s));
   dotBtns.forEach((b, k) => b.setAttribute('aria-current', k === s ? 'true' : 'false'));
 }
-dotBtns.forEach(b => b.addEventListener('click', () => goTo(Number(b.dataset.i))));
-if (!matchMedia('(prefers-reduced-motion: reduce)').matches) {
-  setInterval(() => goTo(s + 1), SLIDE_MS);
+function startTimer() {
+  clearInterval(timer);
+  if (!reduceMotion && slides.length > 1) timer = setInterval(() => goTo(s + 1), SLIDE_MS);
 }
+function bindDots() {
+  dotBtns.forEach((b, k) => b.addEventListener('click', () => { goTo(k); startTimer(); }));
+}
+function buildSlides(names) {
+  const box = document.querySelector('.slides');
+  const dots = document.querySelector('.dots');
+  box.innerHTML = ''; dots.innerHTML = '';
+  names.forEach((name, k) => {
+    const d = document.createElement('div');
+    d.className = 'slide';
+    const img = document.createElement('img');
+    img.alt = '';
+    img.loading = k === 0 ? 'eager' : 'lazy';
+    img.src = 'scenes/' + encodeURIComponent(name);
+    d.append(img);
+    box.append(d);
+    const b = document.createElement('button');
+    b.setAttribute('aria-label', '第 ' + (k + 1) + ' 張');
+    dots.append(b);
+  });
+  slides = [...box.querySelectorAll('.slide')];
+  dotBtns = [...dots.querySelectorAll('button')];
+  bindDots();
+  s = 0; goTo(0); startTimer();
+}
+async function loadScenes() {
+  try {
+    const res = await fetch(REPO_API, { headers: { Accept: 'application/vnd.github+json' } });
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const files = await res.json();
+    const names = files
+      .filter(f => f.type === 'file' && /\.(jpe?g|png|webp|gif)$/i.test(f.name))
+      .map(f => f.name)
+      .sort((a, b) => a.localeCompare(b, undefined, { numeric: true }));
+    if (names.length) buildSlides(names);
+  } catch (e) {
+    /* 讀取失敗時保留示意風景 */
+  }
+}
+// 先使用示意風景，讀取到照片後再替換
+slides = [...document.querySelectorAll('.slide')];
+dotBtns = [...document.querySelectorAll('.dots button')];
+bindDots();
+goTo(0); startTimer();
+loadScenes();
 </script>
 </body>
 </html>
